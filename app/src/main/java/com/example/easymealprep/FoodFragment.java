@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.ResultSet;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 public class FoodFragment extends Fragment {
 
     TextView foodNameTV, foodDescTV, ingredientsTV, toolsTV, instructionsTV;
+    ToggleButton fav_toggle;
     ImageView foodPicIV;
 
     public FoodFragment() {
@@ -45,10 +48,27 @@ public class FoodFragment extends Fragment {
         ingredientsTV = (TextView) inputFragmentView.findViewById(R.id.ingredients_tv);
         toolsTV = (TextView) inputFragmentView.findViewById(R.id.tools_tv);
         instructionsTV = (TextView) inputFragmentView.findViewById(R.id.instructions_tv);
+        fav_toggle = (ToggleButton) inputFragmentView.findViewById(R.id.fav_toggle);
         int foodID = (int) Statics.currFood[0];
+        System.out.print("Favorite List:");
+        for (int i = 0; i < Statics.currFavList.size(); i++) {
+            System.out.print(Statics.currFavList.get(i)+", ");
+        }
+        System.out.println();
         String foodName = (String) Statics.currFood[1];
         String foodDesc = (String) Statics.currFood[2];
         byte[] foodPic = (byte[]) Statics.currFood[3];
+        if (Statics.currFavList.contains(foodID)) {
+            fav_toggle.setChecked(true);
+        } else {
+            fav_toggle.setChecked(false);
+        }
+        fav_toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                new FavoriteFoodAsync().execute(isChecked);
+            }
+        });
         foodNameTV.setText(foodName);
         foodDescTV.setText(foodDesc);
 
@@ -66,6 +86,35 @@ public class FoodFragment extends Fragment {
         new GetRecipeInfoAsync().execute(foodID);
     }
 
+    public class FavoriteFoodAsync extends AsyncTask<Boolean,Void,Void> {
+        Account account;
+
+        @Override
+        protected Void doInBackground(Boolean... booleans) {
+            Statics.connection = new SQLConnection();
+
+            System.out.println("Entered in LoginAccountAsync:doInBackground ");
+            boolean fav = booleans[0];
+            int foodID = (int) Statics.currFood[0];
+            account = new Account(Statics.connection.getConnection());
+            if (fav) {
+                boolean set = account.setFavorite(foodID);
+                Statics.currFavList.add(foodID);
+                if (set)
+                    System.out.println("set pass");
+                else
+                    System.out.println("set fail");
+            } else {
+                boolean set = account.deleteFavorite(foodID);
+                Statics.currFavList.remove((Object)foodID);
+                if (set)
+                    System.out.println("remove pass");
+                else
+                    System.out.println("remove fail");
+            }
+            return null;
+        }
+    }
     public class GetRecipeInfoAsync extends AsyncTask<Integer,Void,Void> {
         ResultSet recipeResultSet;
         ArrayList [] ingredientsList;
@@ -100,9 +149,6 @@ public class FoodFragment extends Fragment {
                     System.out.println("recipe error post");
                     e.printStackTrace();
                 }
-            }
-            else {
-                System.out.println("resultset null");
             }
             String ingredientsText = "";
             for (int i = 0; i < ingredientsList[1].size(); i++) {//ADDED IN ITERATION 2

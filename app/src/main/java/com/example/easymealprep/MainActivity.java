@@ -13,6 +13,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 // THIS WHOLE FILE WAS CREATED IN ITERATION 1
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     TextView title, login;
@@ -105,6 +110,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String password = strings[1];
             account = new Account(Statics.connection.getConnection());
             Statics.check = account.loginAccount(accountName,password);
+            ResultSet resultSet = account.getFavorite();
+            Statics.currFavList = new ArrayList<>();
+            if (resultSet != null) {
+                System.out.println("ASDasd");
+                try {
+                    System.out.println("try favlist");
+                    while (resultSet.next()) {
+                        System.out.println("while favlist");
+                        int foodID = resultSet.getInt("foodID");
+                        Statics.currFavList.add(foodID);
+                        System.out.println(foodID);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
             System.out.println(Statics.check + "do in bac");
             return null;
         }

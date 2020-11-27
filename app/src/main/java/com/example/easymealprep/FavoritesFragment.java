@@ -45,12 +45,25 @@ public class FavoritesFragment extends Fragment {
     }
 
     public class GetFavoriteAsync extends AsyncTask<Void,Void,Void> {
-        Account account;
+        Food food;
         ResultSet resultSet;
         @Override
         protected Void doInBackground(Void... voids) {
-            account = new Account(Statics.connection.getConnection());
-            resultSet = account.getFavorite();
+            food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
+
+//            resultSet = account.getFavorite();
+//            if (resultSet != null) {
+//                System.out.println("ASDasd");
+//                try {
+//                    while (resultSet.next()) {
+//                        int foodID = resultSet.getInt("foodID");
+//                        list.add(foodID);
+//                        System.out.println(foodID);
+//                    }
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
             return null;
         }
 
@@ -58,18 +71,7 @@ public class FavoritesFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (resultSet != null) {
-                System.out.println("ASDasd");
-                try {
-                    while (resultSet.next()) {
-                        int foodID = resultSet.getInt("foodID");
-                        list.add(foodID);
-                        System.out.println(foodID);
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+
         }
     }
     public class GetFavoritesFoodNameAsync extends AsyncTask<Void,Void,Void> {

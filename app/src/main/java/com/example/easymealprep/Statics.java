@@ -1,5 +1,7 @@
 package com.example.easymealprep;
 
+import java.util.ArrayList;
+
 public class Statics {
     static SQLConnection connection;
     static boolean loop = true;
@@ -10,4 +12,5 @@ public class Statics {
     // currFood[2] will be food description
     // currFood[3] will be food picture
     static Object[] currFood = new Object[4];
+    static ArrayList<Integer> currFavList;
 }

@@ -50,20 +50,6 @@ public class FavoritesFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
             food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
-
-//            resultSet = account.getFavorite();
-//            if (resultSet != null) {
-//                System.out.println("ASDasd");
-//                try {
-//                    while (resultSet.next()) {
-//                        int foodID = resultSet.getInt("foodID");
-//                        list.add(foodID);
-//                        System.out.println(foodID);
-//                    }
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            }
             return null;
         }
 

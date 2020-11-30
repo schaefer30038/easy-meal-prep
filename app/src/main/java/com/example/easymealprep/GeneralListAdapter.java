@@ -67,6 +67,15 @@ public class GeneralListAdapter extends BaseAdapter {
                 imageView.setImageBitmap(bmp);
             }
         }
+
+        if (listName.equals("Favorites List")) {
+            byte[] foodPic = (byte[]) FavoritesFragment.arrayLists.get(position)[3];
+            if (foodPic != null) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(foodPic, 0, foodPic.length);
+                imageView.setImageBitmap(bmp);
+            }
+        }
+
         // Set the title and button name
         title.setText(entryData.get(position));
         //btnAction.setText("Action " + position);

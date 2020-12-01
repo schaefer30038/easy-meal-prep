@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 // THIS WHOLE FILE WAS CREATED IN ITERATION 1
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    TextView title, login;
+    TextView title, login, forgot_password;
     EditText username, password;
     Button newAccount, loginB;
 
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         title = (TextView) findViewById(R.id.title_TextView);
         // loginScreenLabel = (TextView) findViewById(R.id.loginScreenLabel_TextView);
         login = (TextView) findViewById(R.id.login_TextView);
+        forgot_password = (TextView) findViewById(R.id.forgot_password);
 
         username = (EditText) findViewById(R.id.username_EditText);
         password = (EditText) findViewById(R.id.password_EditText);
@@ -57,6 +58,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         prog = (ProgressBar)findViewById(R.id.progressBar) ;
         prog.setVisibility(View.GONE);
+
+        //TODO forgot password
+        forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+
+            }
+        });
     }
 
     @Override

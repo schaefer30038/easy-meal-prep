@@ -48,35 +48,31 @@ public class FavoritesFragment extends Fragment {
 
     public class GetFavoriteAsync extends AsyncTask<Void,Void,Void> {
         Food food;
-        ResultSet resultSet;
         @Override
         protected Void doInBackground(Void... voids) {
             food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
-//            arrayLists = food.getFavoritesFoodName(Statics.currFavList);
-//            for (int i : Statics.currFavList) {
-                ResultSet resultSet =  food.listAllFood();
+            for (int i : Statics.currFavList) {
+                ResultSet resultSet = food.searchOneFood(i);
                 if (resultSet != null) {
                     try {
-                        while (resultSet.next()) {
-                            int foodID = resultSet.getInt("foodID");
-                            String foodName = resultSet.getString("foodName");
-                            String foodDescription = resultSet.getString("foodDescription");
-                            byte [] foodPic = resultSet.getBytes("foodPic");
-                            if (Statics.currFavList.contains(foodID)) {
-                                Object[] obj = new Object[4];
-                                obj[0] = foodID;
-                                obj[1] = foodName;
-                                obj[2] = foodDescription;
-                                obj[3] = foodPic;
-                                arrayLists.add(obj);
-                                nameList.add(foodName);
-                                System.out.println("GetFavoriteAsync " + foodID);
-                            }
-                        }
+                        resultSet.next();
+                        int foodID = resultSet.getInt("foodID");
+                        String foodName = resultSet.getString("foodName");
+                        String foodDescription = resultSet.getString("foodDescription");
+                        byte [] foodPic = resultSet.getBytes("foodPic");
+                        Object[] obj = new Object[4];
+                        obj[0] = foodID;
+                        obj[1] = foodName;
+                        obj[2] = foodDescription;
+                        obj[3] = foodPic;
+                        arrayLists.add(obj);
+                        nameList.add(foodName);
+                        System.out.println("GetFavoriteAsync " + i);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
                 }
+            }
             return null;
         }
 
@@ -109,47 +105,4 @@ public class FavoritesFragment extends Fragment {
             });
         }
     }
-//    public class GetFavoritesFoodNameAsync extends AsyncTask<Void,Void,Void> {
-//        Food food;
-//        ResultSet resultSet;
-//        @Override
-//        protected Void doInBackground(Void... avoid) {
-//            food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
-//            arrayLists = food.getFavoritesFoodName(list);
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//            super.onPostExecute(aVoid);
-//            for (int i = 0; i < arrayLists.size(); i++) {
-//                nameList.add((String) arrayLists.get(i)[1]);
-//                System.out.println(nameList.get(i));
-//            }
-//            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, nameList);
-//
-//            listView.setAdapter(arrayAdapter);
-//
-//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    Statics.currFood[0] = arrayLists.get(position)[0];
-//                    Statics.currFood[1] = arrayLists.get(position)[1];
-//                    Statics.currFood[2] = arrayLists.get(position)[2];
-//                    Statics.currFood[3] = arrayLists.get(position)[3];
-//                    Fragment newFragment = new FoodFragment();
-//                    // consider using Java coding conventions (upper first char class names!!!)
-//                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//
-//                    // Replace whatever is in the fragment_container view with this fragment,
-//                    // and add the transaction to the back stack
-//                    transaction.replace(R.id.fragment_container, newFragment);
-//                    transaction.addToBackStack(null);
-//
-//                    // Commit the transaction
-//                    transaction.commit();
-//                }
-//            });
-//        }
-//    }
 }

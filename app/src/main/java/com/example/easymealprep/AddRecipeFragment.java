@@ -37,7 +37,7 @@ import static android.app.Activity.RESULT_OK;
 public class AddRecipeFragment extends Fragment {
     private static final int PICK_IMAGE = 100;
     EditText enterFoodName, enterFoodDescription, enterSteps, enterFoodIngredient, enterFoodTools;
-    Button button, createRecipe_button;
+    Button add_pic, delete_add_pic, createRecipe_button;
     ImageView imageView;
     Uri imageUri;
     Bitmap bitmap;
@@ -60,10 +60,11 @@ public class AddRecipeFragment extends Fragment {
 
         imageView = (ImageView) inputFragmentView.findViewById(R.id.imageView);
 
-        button = (Button) inputFragmentView.findViewById(R.id.button);
+        add_pic = (Button) inputFragmentView.findViewById(R.id.add_pic_btn);
+        delete_add_pic = (Button) inputFragmentView.findViewById(R.id.delete_add_pic_btn);
         createRecipe_button = (Button) inputFragmentView.findViewById(R.id.createRecipe_button);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        add_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println("Made it to AddRecipeFragment, onClick, button");
@@ -77,6 +78,13 @@ public class AddRecipeFragment extends Fragment {
                     System.out.println("Made it to AddRecipeFragment, onClick, button, else statement");
                     startGallery();
                 }
+            }
+        });
+        delete_add_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bitmap = null;
+                imageView.setImageResource(R.drawable.default_food_pic);
             }
         });
 

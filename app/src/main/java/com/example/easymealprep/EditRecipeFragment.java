@@ -40,7 +40,7 @@ import static android.app.Activity.RESULT_OK;
 public class EditRecipeFragment extends Fragment {
     private static final int PICK_IMAGE = 100;
     EditText updateFoodName, updateFoodDescription, updateSteps, updateFoodIngredient, updateFoodTools;
-    Button button, updateRecipe_button;
+    Button update_pic, delete_update_pic, updateRecipe_button;
     ImageView imageView;
     Uri imageUri;
     Bitmap bitmap;
@@ -63,7 +63,8 @@ public class EditRecipeFragment extends Fragment {
 
         imageView = (ImageView) inputFragmentView.findViewById(R.id.updateRecipe_iv);
 
-        button = (Button) inputFragmentView.findViewById(R.id.updateRecipePic_btn);
+        update_pic = (Button) inputFragmentView.findViewById(R.id.updateRecipePic_btn);
+        delete_update_pic = (Button) inputFragmentView.findViewById(R.id.delete_update_pic);
         updateRecipe_button = (Button) inputFragmentView.findViewById(R.id.updateRecipe_btn);
         String foodName = (String) Statics.currFood[1];
         String foodDesc = (String) Statics.currFood[2];
@@ -76,7 +77,7 @@ public class EditRecipeFragment extends Fragment {
             imageView.setImageBitmap(bitmap);
         }
         new GetRecipeInfoAsync().execute();
-        button.setOnClickListener(new View.OnClickListener() {
+        update_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println("Made it to AddRecipeFragment, onClick, button");
@@ -90,6 +91,14 @@ public class EditRecipeFragment extends Fragment {
                     System.out.println("Made it to AddRecipeFragment, onClick, button, else statement");
                     startGallery();
                 }
+            }
+        });
+
+        delete_update_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bitmap = null;
+                imageView.setImageResource(R.drawable.default_food_pic);
             }
         });
 

@@ -23,13 +23,27 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/add_pic_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select Recipe Image"
         android:theme="@style/NormalButton"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
+        app:layout_constraintBaseline_toBaselineOf="@+id/delete_add_pic_btn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/delete_add_pic_btn" />
+
+    <Button
+        android:id="@+id/delete_add_pic_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="20dp"
+        android:text="Remove Recipe Image"
+        android:theme="@style/NormalButton"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
+        app:layout_constraintEnd_toStartOf="@+id/add_pic_btn"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -37,9 +51,9 @@
         android:id="@+id/imageView"
         android:layout_width="140dp"
         android:layout_height="140dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="17dp"
         android:src="@drawable/default_food_pic"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/delete_add_pic_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -49,12 +63,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
+        android:layout_marginStart="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
         android:layout_marginBottom="24dp"
         android:text="Create Recipe"
         android:theme="@style/NormalButton"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/scrollView3"
-        app:layout_constraintStart_toStartOf="@id/scrollView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
 
     <ScrollView
@@ -63,10 +81,15 @@
         android:layout_height="0dp"
         android:layout_marginHorizontal="15dp"
         android:layout_marginVertical="20dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/createRecipe_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
+        app:layout_constraintTop_toBottomOf="@+id/delete_add_pic_btn">
 
         <LinearLayout
             android:layout_width="match_parent"

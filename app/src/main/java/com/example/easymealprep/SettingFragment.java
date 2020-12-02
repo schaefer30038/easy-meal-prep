@@ -1,5 +1,7 @@
 package com.example.easymealprep;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,10 +35,21 @@ public class SettingFragment extends Fragment {
         delete_acc_btn = (Button) inputFragmentView.findViewById(R.id.delete_account);
         update_acc_btn = (Button) inputFragmentView.findViewById(R.id.update_profile);
         help_btn = (Button) inputFragmentView.findViewById(R.id.help);
+
         delete_acc_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DeleteAccountAsync().execute(Statics.currPassword);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Are you sure you want to delete your account? This action can't be undone.")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                new DeleteAccountAsync().execute(Statics.currPassword);
+                            }
+                        }).setNegativeButton("No", null)
+                        .create()
+                        .show();
+
+
             }
         });
         update_acc_btn.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +99,6 @@ public class SettingFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Statics.connection.closeConnection();
             Intent intent2Main = new Intent(getActivity(), MainActivity.class);
             startActivity(intent2Main);
         }

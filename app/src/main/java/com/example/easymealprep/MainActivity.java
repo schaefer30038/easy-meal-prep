@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         username = (EditText) findViewById(R.id.username_EditText);
         password = (EditText) findViewById(R.id.password_EditText);
+        username.setText(Statics.currUserAccount);
 
         newAccount = (Button) findViewById(R.id.newAccount_Button);
         loginB = (Button) findViewById(R.id.loginB_Button);
@@ -64,17 +65,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-
             }
         });
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
         password.setText("");
-        if(Statics.connection != null)
-        Statics.connection.closeConnection();
+        if (!Statics.home){
+            Statics.home = true;
+            if (Statics.connection != null){
+                Statics.connection.closeConnection();
+            }
+            finishAffinity();
+            Intent intent2Main = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(intent2Main);
+        }
     }
 
     @Override
@@ -122,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Statics.check = account.loginAccount(accountName,password);
             ResultSet resultSet = account.getFavorite();
             Statics.currFavList = new ArrayList<>();
-            if (resultSet != null) {
+            if (resultSet != null && Statics.check) {
                 System.out.println("ASDasd");
                 try {
                     System.out.println("try favlist");
@@ -149,13 +157,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             System.out.println("Inside sendData handler, Run method");
             if(Statics.check){
                 System.out.println("loginCheck works");
+                Statics.home = false;
                 Intent intent2Main = new Intent(MainActivity.this, MainMenu.class);
                 startActivity(intent2Main);
             }
             else {
                 System.out.println("loginCheck didnt work");
-
-
                 // Show error
                 Toast.makeText(MainActivity.this, "Incorrect Login Credentials", Toast.LENGTH_SHORT).show();
             }

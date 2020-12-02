@@ -7,6 +7,7 @@ public class Statics {
     static boolean loop = true;
     static boolean check = false;
     static String currUserAccount, currUserEmail, currPassword, currName;
+    static  boolean home = true;
     // currFood[0] will be foodID
     // currFood[1] will be food name
     // currFood[2] will be food description

@@ -104,6 +104,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:theme="@style/BodyText"/>
+
+            <Button
+                android:id="@+id/share_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/NormalButton"
+                android:drawableTop="@android:drawable/ic_menu_share"
+                android:text="Share Recipe"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

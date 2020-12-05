@@ -1,5 +1,6 @@
 package com.example.easymealprep;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +34,10 @@ public class FoodFragment extends Fragment {
     TextView foodNameTV, foodDescTV, ingredientsTV, toolsTV, instructionsTV;
     ToggleButton fav_toggle;
     ImageView foodPicIV;
+    Button share_btn;
+    String instruction = "";
+    String ingredientsText = "";
+    String toolsText = "";
 
     public FoodFragment() {
         // Required empty public constructor
@@ -50,6 +56,7 @@ public class FoodFragment extends Fragment {
         toolsTV = (TextView) inputFragmentView.findViewById(R.id.tools_tv);
         instructionsTV = (TextView) inputFragmentView.findViewById(R.id.instructions_tv);
         fav_toggle = (ToggleButton) inputFragmentView.findViewById(R.id.fav_toggle);
+        share_btn = (Button) inputFragmentView.findViewById(R.id.share_btn);
         int foodID = (int) Statics.currFood[0];
         System.out.print("Favorite List:");
         for (int i = 0; i < Statics.currFavList.size(); i++) {
@@ -76,6 +83,12 @@ public class FoodFragment extends Fragment {
                 new FavoriteFoodAsync().execute(isChecked);
             }
         });
+        share_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareRecipe();
+            }
+        });
         foodNameTV.setText(foodName);
         foodDescTV.setText(foodDesc);
 
@@ -91,6 +104,20 @@ public class FoodFragment extends Fragment {
 
     private void sendData(int foodID) {
         new GetRecipeInfoAsync().execute(foodID);
+    }
+
+    private void shareRecipe() {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        String subject = "EZ Meal Prep " + (String) Statics.currFood[1] + " Recipe";
+        String shareBody = (String) (Statics.currFood[1] + "\n\n" +
+                "Description:\n" + Statics.currFood[2] + "\n\n" +
+                "Ingredients:\n" + ingredientsText + "\n\n" +
+                "Tools Used:\n" + toolsText + "\n\n" +
+                "Directions:\n" + instruction);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        sharingIntent.setType("image/*");
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 
     public class FavoriteFoodAsync extends AsyncTask<Boolean,Void,Void> {
@@ -143,7 +170,6 @@ public class FoodFragment extends Fragment {
         @Override
         protected void onPostExecute(Void avoid) {
             super.onPostExecute(avoid);
-            String instruction = "";
             if (recipeResultSet != null) {
                 System.out.println("recipe post");
                 try {
@@ -157,14 +183,12 @@ public class FoodFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
-            String ingredientsText = "";
             for (int i = 0; i < ingredientsList[1].size(); i++) {//ADDED IN ITERATION 2
                 if (i < ingredientsList[1].size() - 1)
                     ingredientsText += ingredientsList[1].get(i) + ", ";
                 else
                     ingredientsText += ingredientsList[1].get(i);
             }
-            String toolsText = "";
             for (int i = 0; i < toolsList[1].size(); i++) {//ADDED IN ITERATION 2
                 if (i < toolsList[1].size() - 1)
                     toolsText += toolsList[1].get(i) + ", ";

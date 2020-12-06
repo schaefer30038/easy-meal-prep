@@ -11,8 +11,8 @@ create table Account (
 create table Food (
 	foodID BIGINT,
     userAccount varchar(20),
-    foodName varchar(20),
-    foodDescription varchar(100),
+    foodName varchar(40),
+    foodDescription varchar(200),
     foodPic BLOB,
     primary key (foodID, userAccount),
     foreign key (userAccount) references Account(userAccount) on update Cascade on delete cascade
@@ -27,25 +27,25 @@ create table Favorite (
 );
 
 create table Ingredient (
-	ingredientName varchar(20),
+	ingredientName varchar(40),
     primary key (ingredientName)
 );
 
 create table FoodIngredient (
 	foodID BIGINT,
-    ingredientName varchar(20),
+    ingredientName varchar(40),
     primary key (foodID, ingredientName),
     foreign key (foodID) references Food(foodID) on update cascade on delete cascade,
     foreign key (ingredientName) references Ingredient(ingredientName) on update cascade on delete cascade
 );
 
 create table Tool (
-	toolName varchar(20),
+	toolName varchar(40),
     primary key (toolName)
 );
 
 create table FoodTool (
-	toolName varchar(20),
+	toolName varchar(40),
     foodID BIGINT,
     primary key (toolName, foodID),
     foreign key (toolName) references Tool(toolName) on update cascade on delete cascade,
@@ -55,10 +55,14 @@ create table FoodTool (
 create table Recipe (
 	foodID BIGINT,
     step BIGINT,
-    instruction varchar(100),
+    instruction varchar(200),
     primary key (foodID, step),
     foreign key (foodID) references Food(foodID) on update cascade on delete cascade
 );
+
+drop table Account;
+show tables;
+
 
 delimiter $$
 drop procedure if exists loginAccount;
@@ -219,7 +223,7 @@ delimiter ;
 
 delimiter $$
 drop procedure if exists createFood;
-create procedure createFood (in id BIGINT, in uaccount VARCHAR(20), in fname VARCHAR(20), in fDescription VARCHAR(20), in fPic BLOB, out status VARCHAR(10))
+create procedure createFood (in id BIGINT, in uaccount VARCHAR(20), in fname VARCHAR(40), in fDescription VARCHAR(200), in fPic BLOB, out status VARCHAR(10))
 cf: begin
 	declare getID BIGINT;
     
@@ -242,7 +246,7 @@ delimiter ;
 
 delimiter $$
 drop procedure if exists updateFood;
-create procedure updateFood (in fid BIGINT, in uaccount varchar(20), in fname varchar(20), in fdescription varchar(100), in fpic BLOB, out status varchar(10))
+create procedure updateFood (in fid BIGINT, in uaccount varchar(20), in fname varchar(40), in fdescription varchar(200), in fpic BLOB, out status varchar(10))
 uf: begin
 	declare getID BIGINT;
     set getID = (
@@ -278,7 +282,7 @@ delimiter ;
 
 delimiter $$
 drop procedure if exists createRecipe;
-create procedure createRecipe (in fid BIGINT, in ustep BIGINT, in uinstruction VARCHAR(100), in uaccount varchar(20), out status VARCHAR(10))
+create procedure createRecipe (in fid BIGINT, in ustep BIGINT, in uinstruction VARCHAR(200), in uaccount varchar(20), out status VARCHAR(10))
 cr: begin
 	declare findID BIGINT;
     declare findAccount varchar(20);
@@ -354,7 +358,7 @@ delimiter ;
 
 delimiter $$
 drop procedure if exists updateRecipe;
-create procedure updateRecipe(in fid BIGINT, in ustep BIGINT, in instruction varchar(100), in uaccount varchar(20))
+create procedure updateRecipe(in fid BIGINT, in ustep BIGINT, in instruction varchar(200), in uaccount varchar(20))
 ur: begin
 	declare findID BIGINT;
     declare findAccount varchar(20);
@@ -398,7 +402,7 @@ delimiter ;
 
 delimiter $$
 drop procedure if exists createTool;
-create procedure createTool (in tname varchar(20))
+create procedure createTool (in tname varchar(40))
 ct: begin
 	declare tool varchar(20);
     
@@ -427,7 +431,7 @@ delimiter ;
 
 delimiter $$
 drop procedure if exists createToolFood;
-create procedure createToolFood(in toolName varchar(20), in foodID BIGINT)
+create procedure createToolFood(in toolName varchar(40), in foodID BIGINT)
 ctf: begin
 	declare find BIGINT;
     declare findFood BIGINT;
@@ -467,7 +471,7 @@ delimiter ;
 
 delimiter $$
 drop procedure if exists createIngredient;
-create procedure createIngredient (in newIngredient varchar(20), out status varchar(10))
+create procedure createIngredient (in newIngredient varchar(40), out status varchar(10))
 ci: begin
 	declare find varchar(20);
     
@@ -487,7 +491,7 @@ delimiter ;
 
 delimiter $$
 drop procedure if exists createIngredientFood;
-create procedure createIngredientFood (in fid BIGINT, in newIngredient varchar(20))
+create procedure createIngredientFood (in fid BIGINT, in newIngredient varchar(40))
 cif: begin
 	declare find BIGINT;
     

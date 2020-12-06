@@ -1,6 +1,6 @@
-package com.example.easymealprep; /**
+package com.example.easymealprep;
 
-
+/**
  * Created by pankaj on 2/24/2017.
  */
 
@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.Security;
 import java.util.Properties;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.Message;

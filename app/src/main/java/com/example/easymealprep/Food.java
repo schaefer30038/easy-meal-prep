@@ -27,7 +27,7 @@ public class Food {
 		}
 	}
 
-	protected boolean createFood(String foodName, String foodDescription, String picture) {
+	protected boolean createFood(String foodName, String foodDescription, byte[] picture) {
 		int maxID = 0;
 		try {
 			cstmt = conn.prepareCall("call getFoodID(?);");
@@ -35,14 +35,13 @@ public class Food {
 			cstmt.executeUpdate();
 			maxID = cstmt.getInt(1);
 			maxID++; // possible problem: No limit
-			byte[] image = imageToByte(picture);
 
 			cstmt = conn.prepareCall("call createFood(?,?,?,?,?,?);");
 			cstmt.setInt(1, maxID);
 			cstmt.setString(2, this.userAccount);
 			cstmt.setString(3, foodName);
 			cstmt.setString(4, foodDescription);
-			cstmt.setBytes(5, image);
+			cstmt.setBytes(5, picture);
 			cstmt.registerOutParameter(6, Types.VARCHAR);
 
 			cstmt.executeUpdate();
@@ -118,9 +117,8 @@ public class Food {
 		return rs;
 	}
 
-	protected boolean updateFood(int foodID, String foodName, String foodDescription, String picture) {
+	protected boolean updateFood(int foodID, String foodName, String foodDescription, byte[] picture) {
 
-		byte[] image = imageToByte(picture);
 
 		try {
 			cstmt = conn.prepareCall("call updateFood (?, ?, ?, ?, ?, ?);");
@@ -128,7 +126,7 @@ public class Food {
 			cstmt.setString(2, this.userAccount);
 			cstmt.setString(3, foodName);
 			cstmt.setString(4, foodDescription);
-			cstmt.setBytes(5, image);
+			cstmt.setBytes(5, picture);
 			cstmt.registerOutParameter(6, Types.VARCHAR);
 
 			int test = cstmt.executeUpdate();

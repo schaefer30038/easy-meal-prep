@@ -1,3 +1,5 @@
+package com.example.easymealprep;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -86,7 +88,7 @@ public class Ingredient {
 			result[0] = new ArrayList<String>();
 			result[1] = new ArrayList<String>();
 
-			String query = "select * from FoodIngredient;";
+			String query = "select * from FoodIngredient where foodID = " + foodID + ";";
 			ResultSet rs = stmt.executeQuery(query);
 
 			if (rs != null) {

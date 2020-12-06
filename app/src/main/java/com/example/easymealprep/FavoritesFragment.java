@@ -16,18 +16,18 @@ import android.widget.ListView;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+//WHOLE FILE CREATED IN ITERATION1
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FavoritesFragment#newInstance} factory method to
+ * Use the {@link FavoritesFragment#} factory method to
  * create an instance of this fragment.
  */
 public class FavoritesFragment extends Fragment {
 
     ListView listView;
-    ArrayList <Object[]> arrayLists = new ArrayList <Object[]>();
+    static ArrayList <Object[]> arrayLists;
+    GeneralListAdapter generalListAdapter;
     ArrayList <String> nameList;
-    ArrayList<Integer> list = new ArrayList<>();
 
     public FavoritesFragment() {
         // Required empty public constructor
@@ -40,58 +40,48 @@ public class FavoritesFragment extends Fragment {
         View inputFragmentView = inflater.inflate(R.layout.fragment_favorites, container, false);
         // Inflate the layout for this fragment
         listView = (ListView) inputFragmentView.findViewById(R.id.fav_list);
+        arrayLists = new ArrayList<>();
+        nameList = new ArrayList<>();
         new GetFavoriteAsync().execute();
         return inputFragmentView;
     }
 
     public class GetFavoriteAsync extends AsyncTask<Void,Void,Void> {
-        Account account;
-        ResultSet resultSet;
+        Food food;
         @Override
         protected Void doInBackground(Void... voids) {
-            account = new Account(Statics.connection.getConnection());
-            resultSet = account.getFavorite();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            if (resultSet != null) {
-                System.out.println("ASDasd");
-                try {
-                    while (resultSet.next()) {
+            food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
+            for (int i : Statics.currFavList) {
+                ResultSet resultSet = food.searchOneFood(i);
+                if (resultSet != null) {
+                    try {
+                        resultSet.next();
                         int foodID = resultSet.getInt("foodID");
-                        list.add(foodID);
-                        System.out.println(foodID);
+                        String foodName = resultSet.getString("foodName");
+                        String foodDescription = resultSet.getString("foodDescription");
+                        byte [] foodPic = resultSet.getBytes("foodPic");
+                        Object[] obj = new Object[4];
+                        obj[0] = foodID;
+                        obj[1] = foodName;
+                        obj[2] = foodDescription;
+                        obj[3] = foodPic;
+                        arrayLists.add(obj);
+                        nameList.add(foodName);
+                        System.out.println("GetFavoriteAsync " + i);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
             }
-        }
-    }
-    public class GetFavoritesFoodNameAsync extends AsyncTask<Void,Void,Void> {
-        Food food;
-        ResultSet resultSet;
-        @Override
-        protected Void doInBackground(Void... avoid) {
-            food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
-            arrayLists = food.getFavoritesFoodName(list);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            for (int i = 0; i < arrayLists.size(); i++) {
-                nameList.add((String) arrayLists.get(i)[1]);
-                System.out.println(nameList.get(i));
-            }
-            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, nameList);
-
-            listView.setAdapter(arrayAdapter);
+            generalListAdapter = new GeneralListAdapter(getActivity(), R.layout.listview_items, nameList);
+            GeneralListAdapter.listName = "Favorites List";
+            listView.setAdapter(generalListAdapter);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

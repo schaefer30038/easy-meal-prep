@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+// THIS WHOLE FILE WAS CREATED IN ITERATION 1
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UpdateProfileFragment#newInstance} factory method to
+ * Use the {@link UpdateProfileFragment} factory method to
  * create an instance of this fragment.
  */
 public class UpdateProfileFragment extends Fragment {

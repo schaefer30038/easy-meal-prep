@@ -19,10 +19,10 @@ import android.widget.TextView;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-/**
+// THIS WHOLE FILE WAS CREATED IN ITERATION 1
+ /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
+ * Use the {@link SearchFragment#} factory method to
  * create an instance of this fragment.
  */
 public class SearchFragment extends Fragment {
@@ -30,7 +30,8 @@ public class SearchFragment extends Fragment {
     EditText searchBox;
     Button search_button;
     ListView listView;
-    ArrayList <Object[]> arrayLists = new ArrayList <Object[]>();
+    GeneralListAdapter generalListAdapter;
+    static ArrayList <Object[]> arrayLists;
 
 
     public SearchFragment() {
@@ -56,6 +57,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String data = (String) searchBox.getText().toString();
+                arrayLists = new ArrayList <Object[]>();
                 sendData(data);
             }
         });
@@ -106,9 +108,9 @@ public class SearchFragment extends Fragment {
                 }
             }
 
-            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, list);
-
-            listView.setAdapter(arrayAdapter);
+            generalListAdapter = new GeneralListAdapter(getActivity(), R.layout.listview_items, list);
+            GeneralListAdapter.listName = "Search List";
+            listView.setAdapter(generalListAdapter);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

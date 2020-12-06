@@ -7,14 +7,20 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+// THIS WHOLE FILE WAS CREATED IN ITERATION 1
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    TextView title, login;
+    TextView title, login, forgot_password;
     EditText username, password;
     Button newAccount, loginB;
 
@@ -39,9 +45,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         title = (TextView) findViewById(R.id.title_TextView);
         // loginScreenLabel = (TextView) findViewById(R.id.loginScreenLabel_TextView);
         login = (TextView) findViewById(R.id.login_TextView);
+        forgot_password = (TextView) findViewById(R.id.forgot_password);
 
         username = (EditText) findViewById(R.id.username_EditText);
         password = (EditText) findViewById(R.id.password_EditText);
+        username.setText(Statics.currUserAccount);
 
         newAccount = (Button) findViewById(R.id.newAccount_Button);
         loginB = (Button) findViewById(R.id.loginB_Button);
@@ -49,16 +57,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         newAccount.setOnClickListener(this);
         loginB.setOnClickListener(this);
 
-        //prog = (ProgressBar)findViewById(R.id.progressBar) ;
-        //prog.setVisibility(View.GONE);
+        prog = (ProgressBar)findViewById(R.id.progressBar) ;
+        prog.setVisibility(View.GONE);
+
+        //TODO forgot password
+        forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+            }
+        });
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
         password.setText("");
-        if(Statics.connection != null)
-        Statics.connection.closeConnection();
+        if (!Statics.home){
+            Statics.home = true;
+            if (Statics.connection != null){
+                Statics.connection.closeConnection();
+            }
+            finishAffinity();
+            Intent intent2Main = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(intent2Main);
+        }
     }
 
     @Override
@@ -79,30 +103,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.loginB_Button:
                 System.out.println("Made it in switch statement loginB");
-//                prog.setVisibility(View.VISIBLE);
+                prog.setVisibility(View.VISIBLE);
                 sendData();
                 break;
         }
     }
 
     private void sendData() {
-        hideKeyboard(MainActivity.this);
         String currUser = username.getText().toString();
         String pass = password.getText().toString();
         System.out.println("Testing BEFRORE LoginAccountAsync");
         new LoginAccountAsync().execute(currUser,pass);
         System.out.println("Testing AFTER LoginAccountAsync");
     }
-    public static void hideKeyboard(Activity activity) {
-//        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-//        //Find the currently focused view, so we can grab the correct window token from it.
-//        View view = activity.getCurrentFocus();
-//        //If no view currently has focus, create a new one, just so we can grab a window token from it
-//        if (view == null) {
-//            view = new View(activity);
-//        }
-//        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
+
     public class LoginAccountAsync extends AsyncTask<String,Void,Void> {
         Account account;
         @Override
@@ -114,6 +128,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String password = strings[1];
             account = new Account(Statics.connection.getConnection());
             Statics.check = account.loginAccount(accountName,password);
+            ResultSet resultSet = account.getFavorite();
+            Statics.currFavList = new ArrayList<>();
+            if (resultSet != null && Statics.check) {
+                System.out.println("ASDasd");
+                try {
+                    System.out.println("try favlist");
+                    while (resultSet.next()) {
+                        System.out.println("while favlist");
+                        int foodID = resultSet.getInt("foodID");
+                        Statics.currFavList.add(foodID);
+                        System.out.println(foodID);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
             System.out.println(Statics.check + "do in bac");
             return null;
         }
@@ -127,16 +157,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             System.out.println("Inside sendData handler, Run method");
             if(Statics.check){
                 System.out.println("loginCheck works");
+                Statics.home = false;
                 Intent intent2Main = new Intent(MainActivity.this, MainMenu.class);
                 startActivity(intent2Main);
             }
             else {
                 System.out.println("loginCheck didnt work");
-
-//            prog.setVisibility(View.GONE);
                 // Show error
                 Toast.makeText(MainActivity.this, "Incorrect Login Credentials", Toast.LENGTH_SHORT).show();
             }
+            prog.setVisibility(View.GONE);
             System.out.println("main activity done");
         }
     }

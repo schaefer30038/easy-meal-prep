@@ -39,7 +39,7 @@ import com.example.easymealprep.MainActivity;
 import com.example.easymealprep.R;
 
 import static com.example.easymealprep.Statics.check;
-
+//WHOLE FILE CREATED IN ITERATION 1
 public class CreateNewAccount extends AppCompatActivity implements View.OnClickListener{
     TextView newAccountLabel;
     EditText username, password, name, email;

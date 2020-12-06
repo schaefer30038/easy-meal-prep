@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/blue_gradient">
 
-
     <TextView
         android:id="@+id/titleList"
         android:layout_width="0dp"
@@ -14,29 +13,27 @@
         android:gravity="center_horizontal"
         android:text="List Of Recipes"
         android:textAlignment="center"
-
-
         android:theme="@style/TitleText"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8sp"
         android:orientation="vertical"
-
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleList">
-
         <ListView
             android:id="@+id/recipeTitles"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:theme="@style/BodyText">
+        </ListView>
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

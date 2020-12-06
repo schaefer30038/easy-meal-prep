@@ -18,10 +18,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
+// THIS WHOLE FILE WAS CREATED IN ITERATION 2
 public class ListRecipeFragment extends Fragment {
-    ListView listView;
-    ArrayList <Object[]> arrayLists = new ArrayList <Object[]>();
+    private View view;
+    private ListView mListview;
+    private ArrayList<String> mArrData;
+    private GeneralListAdapter mAdapter;
+    static ArrayList <Object[]> arrayLists;
     // TODO add titles for recipes to list
     // TODO connect to FoodFragment to view recipe
 
@@ -32,13 +35,13 @@ public class ListRecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View inputFragmentView = inflater.inflate(R.layout.fragment_list, container, false);
-        // Inflate the layout for this fragment
-       // System.out.println("home fragment");
-       // quit_button = (Button) inputFragmentView.findViewById(R.id.Quit);
-        listView = (ListView) inputFragmentView.findViewById(R.id.recipeTitles);
-        new ListAllFoodAsync().execute();
-        return inputFragmentView;
+
+        arrayLists = new ArrayList <Object[]>();
+        view=inflater.inflate(R.layout.fragment_list, container,false);
+        mListview = (ListView) view.findViewById(R.id.recipeTitles);
+        mArrData = new ArrayList<String>();
+        new ListRecipeFragment.ListAllFoodAsync().execute();
+        return view;
     }
     public class ListAllFoodAsync extends AsyncTask<Void,Void,Void> {
         Food food;
@@ -52,7 +55,6 @@ public class ListRecipeFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
             ArrayList<String> list = new ArrayList<>();
             if (resultSet != null) {
                 System.out.println("ASDasd");
@@ -75,12 +77,12 @@ public class ListRecipeFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
+            //used default android.R.layout.simple_list_item_1 before. Changed  this to custom XML for iteration2
+            mAdapter = new GeneralListAdapter(getActivity(), R.layout.listview_items, list);
+            GeneralListAdapter.listName = "All List";
+            mListview.setAdapter(mAdapter);
 
-            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, list);
-
-            listView.setAdapter(arrayAdapter);
-
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Statics.currFood[0] = arrayLists.get(position)[0];

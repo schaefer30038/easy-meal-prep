@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.ViewGroup;
@@ -13,19 +14,22 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+// THIS WHOLE FILE WAS CREATED IN ITERATION 2
 public class ListMyRecipeFragment extends Fragment {
     private View view;
     private ListView mListview;
     private ArrayList<String> mArrData;
     private ListAdapter mAdapter;
-    ArrayList <Object[]> arrayLists = new ArrayList <Object[]>();
+    private ProgressBar pbar;
+    static ArrayList <Object[]> arrayLists;
+    static FragmentManager fragmanager;
     // TODO add titles for recipes to list
     // TODO connect to FoodFragment to view recipe
 
@@ -36,23 +40,19 @@ public class ListMyRecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //View inputFragmentView = inflater.inflate(R.layout.fragment_list, container, false);
-        if(view==null)
-        {
-            view=inflater.inflate(R.layout.fragment_list, container,false);
-        }
-        else
-        {
-            ViewGroup parent = (ViewGroup) view.getParent();
-            parent.removeView(view);
-        }
+
+        arrayLists = new ArrayList <Object[]>();
+        view=inflater.inflate(R.layout.fragment_list, container,false);
         mListview = (ListView) view.findViewById(R.id.recipeTitles);
         mArrData = new ArrayList<String>();
         mAdapter = new ListAdapter(getActivity(),R.layout.customlistlayout, mArrData);
         mListview.setAdapter(mAdapter);
         new ListUserFoodAsync().execute();
+
+
         return view;
     }
+
     public class ListUserFoodAsync extends AsyncTask<Void,Void,Void> {
         Food food;
         ResultSet resultSet;
@@ -64,16 +64,16 @@ public class ListMyRecipeFragment extends Fragment {
         }
         // TODO get only my recipe
         @Override
-        protected void onPostExecute(Void aVoid) {ArrayList<String> list = new ArrayList<>();
+        protected void onPostExecute(Void aVoid) {
+            ArrayList<String> list = new ArrayList<>();
             if (resultSet != null) {
-                System.out.println("ASDasd");
                 try {
                     while (resultSet.next()) {
                         int foodID = resultSet.getInt("foodID");
                         String foodName = resultSet.getString("foodName");
                         String foodDescription = resultSet.getString("foodDescription");
                         list.add(foodName);
-                        byte [] foodPic = resultSet.getBytes("foodPic");
+                        byte[] foodPic = resultSet.getBytes("foodPic");
                         Object[] array = new Object[4];
                         array[0] = foodID;
                         array[1] = foodName;
@@ -89,6 +89,8 @@ public class ListMyRecipeFragment extends Fragment {
 
             mAdapter = new ListAdapter(getActivity(), R.layout.customlistlayout, list);
             mListview.setAdapter(mAdapter);
+            fragmanager = getFragmentManager();
+        //    pbar.setVisibility(View.GONE);
 
 
             mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -111,6 +113,8 @@ public class ListMyRecipeFragment extends Fragment {
                     transaction.commit();
                 }
             });
+
+
         }
     }
 }

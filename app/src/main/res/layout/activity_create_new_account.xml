@@ -30,7 +30,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39" />
+        app:layout_constraintVertical_bias="0.39"
+        android:theme="@style/FillInfo"/>
 
     <EditText
         android:id="@+id/password_EditText"
@@ -40,7 +41,8 @@
         android:hint="Enter Password"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="@id/username_EditText"
-        app:layout_constraintTop_toBottomOf="@+id/username_EditText" />
+        app:layout_constraintTop_toBottomOf="@+id/username_EditText"
+        android:theme="@style/FillInfo"/>
 
     <EditText
         android:id="@+id/name_EditText"
@@ -50,7 +52,8 @@
         android:inputType="textPersonName"
         android:hint="Enter Name"
         app:layout_constraintStart_toStartOf="@id/password_EditText"
-        app:layout_constraintTop_toBottomOf="@+id/password_EditText" />
+        app:layout_constraintTop_toBottomOf="@+id/password_EditText"
+        android:theme="@style/FillInfo"/>
 
     <EditText
         android:id="@+id/email_EditText"
@@ -60,7 +63,8 @@
         android:hint="Enter Email"
         android:inputType="textEmailAddress"
         app:layout_constraintStart_toStartOf="@id/name_EditText"
-        app:layout_constraintTop_toBottomOf="@+id/name_EditText" />
+        app:layout_constraintTop_toBottomOf="@+id/name_EditText"
+        android:theme="@style/FillInfo"/>
 
     <Button
         android:theme="@style/NormalButton"

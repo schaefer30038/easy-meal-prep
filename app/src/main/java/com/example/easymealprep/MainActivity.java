@@ -1,18 +1,16 @@
 package com.example.easymealprep;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
+                Intent intentReset = new Intent(MainActivity.this, ResetPassword.class);
+                startActivity(intentReset);
             }
         });
     }

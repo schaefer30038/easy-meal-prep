@@ -9,11 +9,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -169,6 +168,7 @@ public class AddRecipeFragment extends Fragment {
         }
     }
     public class CreateRecipeAsync extends AsyncTask<Object,Void,Void> {
+        String message = "";
         @Override
         protected Void doInBackground(Object... objects) {
             Food food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
@@ -179,26 +179,55 @@ public class AddRecipeFragment extends Fragment {
 
             Statics.check = food.createFood(foodName, foodDescription, picture);
             int foodID = food.getFoodID(foodName);
-            Recipe recipe = new Recipe(Statics.connection.getConnection(), Statics.currUserAccount);
-            String[] array = instruction.split("\n");
-            ArrayList<String> arrayList = new ArrayList<>();
-            for(String text:array) {
-                arrayList.add(text);
+            if (!Statics.check) {
+                message = " Food picture size might be too large.";
+                return null;
             }
-            Statics.check = Statics.check && recipe.createRecipe(foodID, arrayList);
+
+            Recipe recipe = new Recipe(Statics.connection.getConnection(), Statics.currUserAccount);
+            ArrayList<String> arrayList = new ArrayList<>();
+            String[] array;
+            int count = (int) Math.ceil((double) instruction.length()/100);
+            for (int i = 0; i < count; i++){
+                if (i==count - 1) {
+                    arrayList.add(instruction.substring(i*4, instruction.length()));
+                }else {
+                    arrayList.add(instruction.substring(i*4, ((i+1)*4)));
+                }
+            }
+            Statics.check = recipe.createRecipe(foodID, arrayList);
+            if (!Statics.check) {
+                food.deleteFood(foodName);
+                message = " Entry for the directions might have an issue";
+                return null;
+            }
+
             String ingredientsList = (String) objects[4];
-            array = ingredientsList.split("\n");
+            ingredientsList = ingredientsList.replaceAll(", ", ",");
+            array = ingredientsList.split(",");
             Ingredient ingredient = new Ingredient(Statics.connection.getConnection());
             for(String text:array) {
                 Statics.check = Statics.check && ingredient.createIngredient(text);
                 Statics.check = Statics.check && ingredient.createIngredientFood(foodID, text);
             }
+            if (!Statics.check) {
+                food.deleteFood(foodName);
+                message = " Entry for the ingredients might have an issue";
+                return null;
+            }
+
             Tool tool = new Tool(Statics.connection.getConnection());
             String toolsList = (String) objects[5];
-            array = toolsList.split("\n");
+            toolsList = toolsList.replaceAll(", ", ",");
+            array = toolsList.split(",");
             for(String text:array) {
                 Statics.check = Statics.check && tool.createTool(text);
                 Statics.check = Statics.check && tool.createToolFood(foodID, text);
+            }
+            if (!Statics.check) {
+                food.deleteFood(foodName);
+                message = " Entry for the tools might have an issue";
+                return null;
             }
             return null;
         }
@@ -228,7 +257,7 @@ public class AddRecipeFragment extends Fragment {
                         .create()
                         .show();
             } else {
-                builder.setMessage("Recipe Create Failed")
+                builder.setMessage("Recipe Create Failed." + message)
                         .setNegativeButton("Retry", null)
                         .create()
                         .show();

@@ -1,6 +1,11 @@
 package com.example.easymealprep;
 
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
 
 public class Account {
 
@@ -169,19 +174,50 @@ public class Account {
 		return false;
 	}
 
+	protected boolean resetPassword(String userInput, String userPassword) {
+		String sql = "";
+		if (userInput.contains("@")){
+			sql = sql + "update Account set userPassword = \"" + userPassword + "\" where userEmail = \"" + userInput + "\";";
+		} else {
+			sql = sql + "update Account set userPassword = \"" + userPassword + "\" where userAccount = \"" + userInput + "\";";
+		}
+		try {
+			stmt.execute(sql);
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Error: resetPassword " + e.getMessage());
+		}
+		return false;
+	}
+
+	protected String getEmail(String userAccount) {
+		String sql = "select a.userEmail from Account a where userAccount = \"" + userAccount + "\";";
+		String result = null;
+		try {
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs != null) {
+				rs.next();
+				result = rs.getString("userEmail");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error: getEmail " + e.getMessage());
+		}
+		return result;
+	}
+
 	protected String getUserAccount() {
-		return this.accountName;
+		return Statics.currUserAccount;
 	}
 
 	protected String getUserEmail() {
-		return this.userEmail;
+		return Statics.currUserEmail;
 	}
 
 	protected String getUserPassword() {
-		return this.userPassword;
+		return Statics.currPassword;
 	}
 
 	protected String getUserName() {
-		return this.userName;
+		return Statics.currName;
 	}
 }

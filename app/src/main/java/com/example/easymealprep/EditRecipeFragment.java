@@ -10,11 +10,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +17,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -246,6 +245,7 @@ public class EditRecipeFragment extends Fragment {
     }
 
     public class UpdateRecipeAsync extends AsyncTask<Object,Void,Void> {
+        String message = "";
         @Override
         protected Void doInBackground(Object... objects) {
             boolean bool = false;
@@ -256,24 +256,32 @@ public class EditRecipeFragment extends Fragment {
             byte [] picture = (byte[]) objects[2];
             String instruction = (String) objects[3];
             food.updateFood(foodID, null, null, null);
-            Statics.check = food.updateFood(foodID, foodName, foodDescription, picture);
-            if (!Statics.check) {
-                System.out.println("food update failed");
+            bool = food.updateFood(foodID, foodName, foodDescription, picture);
+            if (!bool) {
+                message = " Food picture size might be too large.";
+                return null;
             }
+
             Recipe recipe = new Recipe(Statics.connection.getConnection(), Statics.currUserAccount);
-            String[] array = instruction.split("\n");
             ArrayList<String> arrayList = new ArrayList<>();
-            for(String text:array) {
-                System.out.println(text);
-                arrayList.add(text);
+            String[] array;
+            int count = (int) Math.ceil((double) instruction.length()/100);
+            for (int i = 0; i < count; i++){
+                if (i==count - 1) {
+                    arrayList.add(instruction.substring(i*4, instruction.length()));
+                }else {
+                    arrayList.add(instruction.substring(i*4, ((i+1)*4)));
+                }
             }
             bool = recipe.updateRecipe(foodID, arrayList);
-            Statics.check = Statics.check && bool;
             if (!bool) {
-                System.out.println("recipe update failed");
+                message = " Entry for the directions might have an issue";
+                return null;
             }
+
             String ingredientsList = (String) objects[4];
-            array = ingredientsList.split("\n");
+            ingredientsList = ingredientsList.replaceAll(", ",",");
+            array = ingredientsList.split(",");
             Ingredient ingredient = new Ingredient(Statics.connection.getConnection());
             arrayList = new ArrayList<>();
             for(String text:array) {
@@ -281,28 +289,31 @@ public class EditRecipeFragment extends Fragment {
                 ingredient.createIngredient(text);
             }
             bool = ingredient.updateIngredient(foodID, arrayList);
-            Statics.check = Statics.check && bool;
-            if (!bool) {
-                System.out.println("ingredient update failed");
-            }
-            if (ingredient.deleteIngredient()) {
+            if (!ingredient.deleteIngredient()) {
                 System.out.println("ingredient delete failed");
             }
+            if (!bool) {
+                message = " Entry for the ingredients might have an issue";
+                return null;
+            }
+
             Tool tool = new Tool(Statics.connection.getConnection());
             String toolsList = (String) objects[5];
-            array = toolsList.split("\n");
+            toolsList.replaceAll(", ", ",");
+            array = toolsList.split(",");
             arrayList = new ArrayList<>();
             for(String text:array) {
                 arrayList.add(text);
                 tool.createTool(text);
             }
             bool = tool.updateToolFood(foodID, arrayList);
-            Statics.check = Statics.check && bool;
-            if (!bool) {
-                System.out.println("tool update failed");
-            }
+
             if (tool.deleteTool()) {
                 System.out.println("tool delete failed");
+            }
+            if (!bool) {
+                message = " Entry for the tools might have an issue";
+                return null;
             }
             return null;
         }
@@ -332,7 +343,7 @@ public class EditRecipeFragment extends Fragment {
                 .create()
                 .show();
             } else {
-                builder.setMessage("Recipe Update Failed")
+                builder.setMessage("Recipe Update Failed." + message)
                 .setNegativeButton("Retry", null)
                 .create()
                 .show();

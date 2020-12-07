@@ -43,6 +43,18 @@ public class UpdateProfileFragment extends Fragment {
                 String sendName = (String) name.getText().toString();
                 String sendPassword = (String) password.getText().toString();
                 String sendEmail = (String) update_button.getText().toString();
+                if(sendName.equals("")){
+                    name.setError("Please enter a name");
+                    return;
+                }
+                if(sendPassword.equals("")){
+                    password.setError("Please enter a password");
+                    return;
+                }
+                if(sendEmail.equals("")){
+                    update_button.setError("Please enter an email");
+                    return;
+                }
                 sendData(sendName, sendPassword, sendEmail);
             }
         });

@@ -71,6 +71,22 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
         String passwordString = password.getText().toString();
         String nameString = name.getText().toString();
         String emailString = email.getText().toString();
+        if(usernameString.equals("")){
+            username.setError("Please enter a username");
+            return;
+        }
+        if(passwordString.equals("")){
+            password.setError("Please enter a password");
+            return;
+        }
+        if(nameString.equals("")){
+            name.setError("Please enter a name");
+            return;
+        }
+        if(emailString.equals("")){
+            email.setError("Please enter an email");
+            return;
+        }
         if(true){
             new CreateAccountAsync().execute(usernameString, passwordString, nameString, emailString);
         }

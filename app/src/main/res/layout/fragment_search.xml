@@ -7,6 +7,24 @@
     android:layout_height="match_parent"
     android:background="@drawable/blue_gradient">
 
+    <Spinner
+        android:id="@+id/spinnerIngred"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_b" />
+    <Spinner
+        android:id="@+id/spinnerTool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerIngred" />
 
     <TextView
         android:id="@+id/titleSearch"
@@ -48,14 +66,18 @@
         app:layout_constraintTop_toBottomOf="@+id/searchField" />
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="392dp"
+        android:layout_height="418dp"
         android:layout_margin="15sp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_b">
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTool"
+        app:layout_constraintVertical_bias="0.857">
+
         <ListView
             android:id="@+id/list"
             android:layout_width="wrap_content"

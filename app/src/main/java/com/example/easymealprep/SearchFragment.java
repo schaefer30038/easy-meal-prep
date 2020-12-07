@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.sql.ResultSet;
@@ -33,7 +33,8 @@ public class SearchFragment extends Fragment {
     GeneralListAdapter generalListAdapter;
     static ArrayList <Object[]> arrayLists;
 
-
+    private static ArrayList<String> selectedIngredients =  new ArrayList<>();
+     private static ArrayList<String> selectedTools =  new ArrayList<>();
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -61,6 +62,40 @@ public class SearchFragment extends Fragment {
                 sendData(data);
             }
         });
+        //TODO get list of ingredients and shove it in here
+        final String[] select_ingredients = {
+                "Select Ingredients", "Milk", "Brocolli", "Ketchup", "Jesus",
+                "Protein Powder"};
+
+        // TODO get list of tools and shove it in here
+        final String[] select_tools = {
+                "Select Tools", "Microwave", "Oven", "Stove", "Toaster",
+                "Bible"};
+        Spinner spinnerIngred= (Spinner) inputFragmentView.findViewById(R.id.spinnerIngred);
+        Spinner spinnerTool = (Spinner) inputFragmentView.findViewById(R.id.spinnerTool);
+        ArrayList<StateVO> listVOsIngred = new ArrayList<>();
+        String[] selected;
+         for (int i = 0; i < select_ingredients.length; i++) {
+            StateVO stateVOIngred = new StateVO();
+            stateVOIngred.setTitle(select_ingredients[i]);
+            stateVOIngred.setSelected(false);
+            listVOsIngred.add(stateVOIngred);
+        }
+        ArrayList<StateVO> listVOsTool = new ArrayList<>();
+
+        for (int i = 0; i < select_tools.length; i++) {
+            StateVO stateVOTool = new StateVO();
+            stateVOTool.setTitle(select_tools[i]);
+            stateVOTool.setSelected(false);
+            listVOsTool.add(stateVOTool);
+        }
+        filterAdapter myAdapterTool = new filterAdapter(getActivity(), 0,
+                listVOsTool,select_tools,selectedTools);
+        filterAdapter myAdapterIngred = new filterAdapter(getActivity(), 0,
+                listVOsIngred,select_ingredients,selectedIngredients);
+
+        spinnerTool.setAdapter(myAdapterTool);
+        spinnerIngred.setAdapter(myAdapterIngred);
         return inputFragmentView;
     }
 
@@ -68,6 +103,15 @@ public class SearchFragment extends Fragment {
     private void sendData(String data) {
         //data is recipe title
         System.out.println(data);
+        //TODO selectedIngredients is the selcted ingreds same for tools both arraylists contain strings
+        for(int i = 0;i < selectedIngredients.size();i++){
+            System.out.print(selectedIngredients.get(i));
+            System.out.println("Next");
+        }
+        for(int i = 0;i < selectedTools.size();i++){
+            System.out.print(selectedTools.get(i));
+            System.out.println("Next");
+        }
         new SearchFoodAsync().execute(data);
     }
 

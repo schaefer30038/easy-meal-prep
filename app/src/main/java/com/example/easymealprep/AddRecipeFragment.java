@@ -97,6 +97,26 @@ public class AddRecipeFragment extends Fragment {
                 String ingredient = enterFoodIngredient.getText().toString();
                 String tool = enterFoodTools.getText().toString();
                 try {
+                    if(name.equals("")){
+                        enterFoodName.setError("Please enter a title");
+                        return;
+                    }
+                    if(description.equals("")){
+                        enterFoodDescription.setError("Please enter a description");
+                        return;
+                    }
+                    if(instruction.equals("")){
+                        enterSteps.setError("Please enter instructions");
+                        return;
+                    }
+                    if(ingredient.equals("")){
+                        enterFoodIngredient.setError("Please enter ingredients");
+                        return;
+                    }
+                    if(tool.equals("")){
+                        enterFoodTools.setError("Please enter tool/tools used");
+                        return;
+                    }
                     sendData(name, description, instruction, ingredient, tool, bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();

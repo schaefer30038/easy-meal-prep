@@ -17,17 +17,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import static android.app.Activity.RESULT_OK;
 
 
@@ -162,10 +159,7 @@ public class EditRecipeFragment extends Fragment {
         System.out.println("Made it to AddRecipeFragment, startGallery");
 
         Intent cameraIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-       // cameraIntent.setType("image/*");
-       // if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(cameraIntent, PICK_IMAGE);
-        //}
+        startActivityForResult(cameraIntent, PICK_IMAGE);
     }
 
     @Override
@@ -213,11 +207,6 @@ public class EditRecipeFragment extends Fragment {
                         int step = recipeResultSet.getInt("step");
                         String inst = recipeResultSet.getString("instruction");
                         instruction = instruction + inst;
-                    }
-                    String [] instArray = instruction.split("\n");
-                    instruction = "";
-                    for (String st : instArray) {
-                        instruction += st;
                     }
                 } catch (SQLException e) {
                     System.out.println("recipe error post");

@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.loginB_Button:
                 System.out.println("Made it in switch statement loginB");
-                prog.setVisibility(View.VISIBLE);
                 sendData();
                 break;
         }
@@ -112,7 +111,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void sendData() {
         String currUser = username.getText().toString();
         String pass = password.getText().toString();
+        if(currUser.equals("")){
+            username.setError("Please enter a username");
+            return;
+        }
+        if(pass.equals("")){
+            password.setError("Please enter a password");
+            return;
+        }
         System.out.println("Testing BEFRORE LoginAccountAsync");
+        prog.setVisibility(View.VISIBLE);
         new LoginAccountAsync().execute(currUser,pass);
         System.out.println("Testing AFTER LoginAccountAsync");
     }

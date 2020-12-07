@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String accountName = strings[0];
             String password = strings[1];
             account = new Account(Statics.connection.getConnection());
-            Statics.check = account.loginAccount(accountName,password);
+            Statics.check = account.loginAccount(Statics.encoder(accountName), Statics.encoder(password));
             ResultSet resultSet = account.getFavorite();
             Statics.currFavList = new ArrayList<>();
             if (resultSet != null && Statics.check) {

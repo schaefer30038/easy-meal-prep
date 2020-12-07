@@ -88,7 +88,9 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
             String userName = strings[2];
             String userEmail = strings[3];
             System.out.println("create async");
-            Statics.check = account.createAccount(accountName, userPassword, userName, userEmail);
+            Statics.check = account.createAccount(Statics.encoder(accountName),
+                    Statics.encoder(userPassword), Statics.encoder(userName),
+                    Statics.encoder(userEmail));
             return null;
         }
 

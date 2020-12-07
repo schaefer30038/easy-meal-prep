@@ -174,9 +174,9 @@ public class Account {
 		return false;
 	}
 
-	protected boolean resetPassword(String userInput, String userPassword) {
+	protected boolean resetPassword(boolean email, String userInput, String userPassword) {
 		String sql = "";
-		if (userInput.contains("@")){
+		if (email){
 			sql = sql + "update Account set userPassword = \"" + userPassword + "\" where userEmail = \"" + userInput + "\";";
 		} else {
 			sql = sql + "update Account set userPassword = \"" + userPassword + "\" where userAccount = \"" + userInput + "\";";

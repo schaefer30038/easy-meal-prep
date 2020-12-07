@@ -212,7 +212,12 @@ public class EditRecipeFragment extends Fragment {
                     while (recipeResultSet.next()) {
                         int step = recipeResultSet.getInt("step");
                         String inst = recipeResultSet.getString("instruction");
-                        instruction = instruction + inst + "\n";
+                        instruction = instruction + inst;
+                    }
+                    String [] instArray = instruction.split("\n");
+                    instruction = "";
+                    for (String st : instArray) {
+                        instruction += st;
                     }
                 } catch (SQLException e) {
                     System.out.println("recipe error post");
@@ -225,14 +230,14 @@ public class EditRecipeFragment extends Fragment {
             String ingredientsText = "";
             for (int i = 0; i < ingredientsList[1].size(); i++) {
                 if (i < ingredientsList[1].size() - 1)
-                    ingredientsText += ingredientsList[1].get(i) + "\n";
+                    ingredientsText += ingredientsList[1].get(i) + ", ";
                 else
                     ingredientsText += ingredientsList[1].get(i);
             }
             String toolsText = "";
             for (int i = 0; i < toolsList[1].size(); i++) {
                 if (i < toolsList[1].size() - 1)
-                    toolsText += toolsList[1].get(i) + "\n";
+                    toolsText += toolsList[1].get(i) + ", ";
                 else
                     toolsText += toolsList[1].get(i);
             }

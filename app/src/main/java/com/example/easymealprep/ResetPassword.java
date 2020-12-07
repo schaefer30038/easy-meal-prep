@@ -59,6 +59,9 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
             Random rand = new Random();
             for (int i = 0; i < 10; i++) {
                 char ch = (char) (rand.nextInt(95) + 32);
+                while (((int) ch == 47) || ((int) ch == 92)){
+                    ch = (char) (rand.nextInt(95) + 32);
+                }
                 password += ch;
             }
             System.out.println(password);
@@ -75,9 +78,9 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
                 recipient = userInput;
                 email = true;
             } else {
-                recipient = Statics.decoder(account.getEmail(userInput));
+                recipient = account.getEmail(userInput);
             }
-            bool = account.resetPassword(email, Statics.encoder(userInput), Statics.encoder(password));
+            bool = account.resetPassword(email, userInput, password);
             connect.closeConnection();
             if (bool) {
                 try {

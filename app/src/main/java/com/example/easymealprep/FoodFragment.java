@@ -170,19 +170,31 @@ public class FoodFragment extends Fragment {
         @Override
         protected void onPostExecute(Void avoid) {
             super.onPostExecute(avoid);
+            String [] instructionArray = null;
             if (recipeResultSet != null) {
                 System.out.println("recipe post");
                 try {
                     while (recipeResultSet.next()) {
-                        int step = recipeResultSet.getInt("step");
                         String inst = recipeResultSet.getString("instruction");
-                        instruction = instruction + step + ". " + inst + "\n";
+                        instruction = instruction + inst;
+                        System.out.println(inst);
+
                     }
                 } catch (SQLException e) {
                     System.out.println("recipe error post");
                     e.printStackTrace();
                 }
             }
+            System.out.println("recipe print" + instruction);
+
+            instructionArray = instruction.split("\n");
+            instruction = "";
+            int step = 1;
+            for (String string : instructionArray) {
+                instruction += "Step " + step + ".\n" + string + "\n\n";
+                step++;
+            }
+
             for (int i = 0; i < ingredientsList[1].size(); i++) {//ADDED IN ITERATION 2
                 if (i < ingredientsList[1].size() - 1)
                     ingredientsText += ingredientsList[1].get(i) + ", ";

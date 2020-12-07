@@ -185,17 +185,21 @@ public class AddRecipeFragment extends Fragment {
             }
 
             Recipe recipe = new Recipe(Statics.connection.getConnection(), Statics.currUserAccount);
-            ArrayList<String> arrayList = new ArrayList<>();
             String[] array;
-            int count = (int) Math.ceil((double) instruction.length()/100);
-            for (int i = 0; i < count; i++){
-                if (i==count - 1) {
-                    arrayList.add(instruction.substring(i*4, instruction.length()));
-                }else {
-                    arrayList.add(instruction.substring(i*4, ((i+1)*4)));
+            ArrayList<String> arrayList = new ArrayList<String>();
+            String inst = "";
+            int cc = 0;
+            for (int i = 0; i < instruction.length(); i++) {
+                inst += instruction.charAt(i);
+                cc++;
+                if (cc == 200 || i == instruction.length() - 1) {
+                    arrayList.add(inst);
+                    cc = 0;
+                    inst = "";
                 }
             }
             Statics.check = recipe.createRecipe(foodID, arrayList);
+            Statics.check = recipe.updateRecipe(foodID, arrayList);
             if (!Statics.check) {
                 food.deleteFood(foodName);
                 message = " Entry for the directions might have an issue";

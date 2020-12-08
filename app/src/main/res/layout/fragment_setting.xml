@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".SettingFragment"
     android:background="@drawable/blue_gradient"
-    android:theme="@style/NormalButton">
+    android:theme="@style/NormalButtonPurple">
 
     <!-- TODO: Update blank fragment layout -->
 

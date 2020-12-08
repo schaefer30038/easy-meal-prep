@@ -7,9 +7,11 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="15dp"
         android:text="text"
-        android:textAlignment="gravity" />
+        android:textSize="17sp"
+        android:textAlignment="gravity"
+        android:theme="@style/BodyText"/>
 
     <CheckBox
         android:id="@+id/checkbox"

@@ -50,7 +50,7 @@
                 android:focusableInTouchMode="false"
                 android:src="@drawable/ic_baseline_delete_24"
                 android:text="Delete"
-                android:theme="@style/NormalButton"
+                android:theme="@style/NormalButtonBlue"
                 app:layout_constraintBottom_toTopOf="@id/editBtn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

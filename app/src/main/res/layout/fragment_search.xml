@@ -14,43 +14,31 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
+        android:theme="@style/SpinnerDropdownTheme"
         app:layout_constraintBottom_toTopOf="@+id/spinnerTool"
         app:layout_constraintEnd_toEndOf="@+id/searchField"
         app:layout_constraintStart_toStartOf="@+id/searchField"
-        app:layout_constraintTop_toBottomOf="@+id/searchField"
-        style='@style/Widget.AppCompat.DropDownItem.Spinner'/>
+        app:layout_constraintTop_toBottomOf="@+id/searchField" />
 
     <Spinner
         android:id="@+id/spinnerTool"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginTop="4dp"
         app:layout_constraintBottom_toTopOf="@+id/search_b"
         app:layout_constraintStart_toStartOf="@+id/spinnerIngred"
         app:layout_constraintTop_toBottomOf="@+id/spinnerIngred"
-        style='@style/Widget.AppCompat.DropDownItem.Spinner'/>
+        android:theme="@style/SpinnerDropdownTheme"/>
 
-    <TextView
-        android:id="@+id/titleSearch"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:gravity="center_horizontal"
-        android:text="Search Recipes"
-        android:textAlignment="center"
-        android:theme="@style/TitleText"
-        app:layout_constraintBottom_toTopOf="@+id/searchField"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/searchField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="15"
+        android:layout_marginTop="16dp"
+        android:ems="17"
         android:gravity="center_horizontal"
         android:hint="Enter Recipe Title"
         android:inputType="textPersonName"
@@ -59,24 +47,21 @@
         app:layout_constraintBottom_toTopOf="@+id/spinnerIngred"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleSearch" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/search_b"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="48dp"
-        android:layout_marginStart="48dp"
         android:gravity="center_horizontal"
         android:text="Search Recipes"
         android:textAlignment="center"
-        android:theme="@style/NormalButton"
+        android:textAllCaps="false"
+        android:theme="@style/NormalButtonBlue"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/searchField"
+        app:layout_constraintStart_toStartOf="@id/searchField"
         app:layout_constraintTop_toBottomOf="@+id/spinnerTool" />
 
     <LinearLayout

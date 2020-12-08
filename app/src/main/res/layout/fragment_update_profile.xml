@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Update"
-        android:theme="@style/NormalButton"
+        android:theme="@style/NormalButtonPurple"
         app:layout_constraintEnd_toEndOf="@id/etUpdatePassword"
         app:layout_constraintStart_toStartOf="@id/etUpdatePassword"
         app:layout_constraintTop_toBottomOf="@+id/etUpdatePassword" />

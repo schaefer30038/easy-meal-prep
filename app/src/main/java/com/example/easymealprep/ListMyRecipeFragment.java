@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 // THIS WHOLE FILE WAS CREATED IN ITERATION 2
 public class ListMyRecipeFragment extends Fragment {
@@ -41,6 +42,7 @@ public class ListMyRecipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        ListAdapter.activity = getActivity();
         arrayLists = new ArrayList <Object[]>();
         view=inflater.inflate(R.layout.fragment_list, container,false);
         mListview = (ListView) view.findViewById(R.id.recipeTitles);

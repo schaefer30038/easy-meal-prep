@@ -37,6 +37,8 @@ public class UpdateProfileFragment extends Fragment {
         password = (EditText) inputFragmentView.findViewById(R.id.etUpdatePassword);
         email = (EditText) inputFragmentView.findViewById(R.id.etUpdateEmailAddress);
         update_button = (Button) inputFragmentView.findViewById(R.id.update_confirm);
+        name.setText(Statics.currName);
+        email.setText(Statics.currUserEmail);
         update_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

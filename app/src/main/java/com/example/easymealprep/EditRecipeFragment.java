@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -50,7 +52,6 @@ public class EditRecipeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View inputFragmentView = inflater.inflate(R.layout.fragment_edit_recipe, container, false);
         // Inflate the layout for this fragment
-
         updateFoodName = (EditText) inputFragmentView.findViewById(R.id.updateFoodName);
         updateFoodDescription = (EditText) inputFragmentView.findViewById(R.id.updateFoodDescription);
         updateSteps = (EditText) inputFragmentView.findViewById(R.id.updateSteps);
@@ -101,6 +102,7 @@ public class EditRecipeFragment extends Fragment {
         updateRecipe_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getActivity(), "Recipe is being updated. Please wait a moment", Toast.LENGTH_LONG).show();
                 System.out.println("Made it to AddRecipeFragment, onClick, createRecipe_button");
                 String name = updateFoodName.getText().toString();
                 String description = updateFoodDescription.getText().toString();

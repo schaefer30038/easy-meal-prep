@@ -1,7 +1,10 @@
 package com.example.easymealprep;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -24,7 +27,8 @@ import static com.example.easymealprep.ListMyRecipeFragment.arrayLists;
 public class ListAdapter extends BaseAdapter {
     private Context context;
     private int resource;
-    private Activity activity;
+    @SuppressLint("StaticFieldLeak")
+    static Activity activity;
     private ArrayList<String> entryData;
     
 
@@ -70,11 +74,18 @@ public class ListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 // TODO Logic for delete
-                new DeleteFoodAsync().execute(entryData.get(position));
-                entryData.remove(entryData.get(position));
-                arrayLists.remove(position);
-                notifyDataSetChanged();
-
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setMessage("Are you sure you want to delete the recipe? This action can't be undone.")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                new DeleteFoodAsync().execute(entryData.get(position));
+                                entryData.remove(entryData.get(position));
+                                arrayLists.remove(position);
+                                notifyDataSetChanged();
+                            }
+                        }).setNegativeButton("No", null)
+                        .create()
+                        .show();
             }
         });
         editButton.setOnClickListener(new View.OnClickListener() {

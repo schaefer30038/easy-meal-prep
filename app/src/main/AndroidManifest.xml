@@ -17,6 +17,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainMenu" />
         <activity android:name=".CreateNewAccount" />
+        <activity android:name=".ResetPassword" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

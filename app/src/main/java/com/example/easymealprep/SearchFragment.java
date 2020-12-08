@@ -50,7 +50,6 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         View inputFragmentView = inflater.inflate(R.layout.fragment_search, container, false);
         // Inflate the layout for this fragment
-        title = (TextView) inputFragmentView.findViewById(R.id.titleSearch);
         searchBox = (EditText) inputFragmentView.findViewById(R.id.searchField);
         listView = (ListView) inputFragmentView.findViewById(R.id.list);
         search_button = (Button) inputFragmentView.findViewById(R.id.search_b);

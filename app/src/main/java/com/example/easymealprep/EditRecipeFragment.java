@@ -185,8 +185,8 @@ public class EditRecipeFragment extends Fragment {
 
     public class GetRecipeInfoAsync extends AsyncTask<Void,Void,Void> {
         ResultSet recipeResultSet;
-        ArrayList [] ingredientsList;
-        ArrayList [] toolsList;
+        ArrayList <String> ingredientsList;
+        ArrayList <String> toolsList;
         @Override
         protected Void doInBackground(Void... voids) {
             int foodID = (int) Statics.currFood[0];
@@ -219,18 +219,18 @@ public class EditRecipeFragment extends Fragment {
                 System.out.println("resultset null");
             }
             String ingredientsText = "";
-            for (int i = 0; i < ingredientsList[1].size(); i++) {
-                if (i < ingredientsList[1].size() - 1)
-                    ingredientsText += ingredientsList[1].get(i) + ", ";
+            for (int i = 0; i < ingredientsList.size(); i++) {
+                if (i < ingredientsList.size() - 1)
+                    ingredientsText += ingredientsList.get(i) + ", ";
                 else
-                    ingredientsText += ingredientsList[1].get(i);
+                    ingredientsText += ingredientsList.get(i);
             }
             String toolsText = "";
-            for (int i = 0; i < toolsList[1].size(); i++) {
-                if (i < toolsList[1].size() - 1)
-                    toolsText += toolsList[1].get(i) + ", ";
+            for (int i = 0; i < toolsList.size(); i++) {
+                if (i < toolsList.size() - 1)
+                    toolsText += toolsList.get(i) + ", ";
                 else
-                    toolsText += toolsList[1].get(i);
+                    toolsText += toolsList.get(i);
             }
             System.out.println(instruction);
 

@@ -81,24 +81,26 @@ public class Ingredient {
 		return false;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	ArrayList[] listIngredientFood(int foodID) {
+	ArrayList<String> listIngredientFood(int foodID) {
 		try {
-			ArrayList[] result = new ArrayList[2];
-			result[0] = new ArrayList<String>();
-			result[1] = new ArrayList<String>();
+			ArrayList<String> result = new ArrayList<String>();
+//			ArrayList[] result = new ArrayList[2];
+//			result[0] = new ArrayList<String>();
+//			result[1] = new ArrayList<String>();
 
 			String query = "select * from FoodIngredient where foodID = " + foodID + ";";
 			ResultSet rs = stmt.executeQuery(query);
 
 			if (rs != null) {
 				while (rs.next()) {
-					result[0].add(rs.getInt("foodID") + "");
-					result[1].add(rs.getString("ingredientName"));
+//					result[0].add(rs.getInt("foodID") + "");
+//					result[1].add(rs.getString("ingredientName"));
+					result.add(rs.getString("ingredientName"));
 				}
 			}
 			return result;
 		} catch (SQLException e) {
+			System.out.println("Error: listIngredientFood " + e.getMessage());
 		}
 		return null;
 	}
@@ -106,6 +108,7 @@ public class Ingredient {
 	ArrayList<String> listIngredient() {
 		try {
 			ArrayList<String> result = new ArrayList<>();
+			result.add("Select Ingredients");
 			String query = "select * from Ingredient;";
 			ResultSet rs = stmt.executeQuery(query);
 

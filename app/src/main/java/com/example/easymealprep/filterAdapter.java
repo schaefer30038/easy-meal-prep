@@ -17,10 +17,10 @@ public class filterAdapter extends ArrayAdapter<StateVO> {
     private ArrayList<StateVO> listState;
     private filterAdapter myAdapter;
     private boolean isFromView = false;
-    private String[] listedItems;
+    private ArrayList<String> listedItems;
     private ArrayList<String>selectedItems;
 
-    public filterAdapter(Context context, int resource, List<StateVO> objects, String [] listedItems, ArrayList<String>selectedItems) {
+    public filterAdapter(Context context, int resource, List<StateVO> objects, ArrayList<String> listedItems, ArrayList<String>selectedItems) {
         super(context, resource, objects);
         this.mContext = context;
         this.listState = (ArrayList<StateVO>) objects;
@@ -76,10 +76,11 @@ public class filterAdapter extends ArrayAdapter<StateVO> {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int getPosition = (Integer) buttonView.getTag();
                 if(isChecked){
-                    selectedItems.add(listedItems[getPosition]);
+                    System.out.println(getPosition);
+                    selectedItems.add(listedItems.get(getPosition));
                 }
                 else{
-                    selectedItems.remove(listedItems[getPosition]);
+                    selectedItems.remove(listedItems.get(getPosition));
                 }
 
                 if (!isFromView) {

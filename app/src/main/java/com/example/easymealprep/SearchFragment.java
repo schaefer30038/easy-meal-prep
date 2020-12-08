@@ -33,9 +33,12 @@ public class SearchFragment extends Fragment {
     ListView listView;
     GeneralListAdapter generalListAdapter;
     static ArrayList <Object[]> arrayLists;
+    ArrayList<String> ingredientsList;
+    ArrayList<String> toolsList;
+    View inputFragmentView;
 
     private static ArrayList<String> selectedIngredients =  new ArrayList<>();
-     private static ArrayList<String> selectedTools =  new ArrayList<>();
+    private static ArrayList<String> selectedTools =  new ArrayList<>();
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -49,7 +52,7 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View inputFragmentView = inflater.inflate(R.layout.fragment_search, container, false);
+        inputFragmentView = inflater.inflate(R.layout.fragment_search, container, false);
         // Inflate the layout for this fragment
         searchBox = (EditText) inputFragmentView.findViewById(R.id.searchField);
         listView = (ListView) inputFragmentView.findViewById(R.id.list);
@@ -63,40 +66,7 @@ public class SearchFragment extends Fragment {
                 sendData(data);
             }
         });
-        //TODO get list of ingredients and shove it in here
-        final String[] select_ingredients = {
-                "Select Ingredients", "Milk", "Brocolli", "Ketchup", "Jesus",
-                "Protein Powder"};
-
-        // TODO get list of tools and shove it in here
-        final String[] select_tools = {
-                "Select Tools", "Microwave", "Oven", "Stove", "Toaster",
-                "Bible"};
-        Spinner spinnerIngred= (Spinner) inputFragmentView.findViewById(R.id.spinnerIngred);
-        Spinner spinnerTool = (Spinner) inputFragmentView.findViewById(R.id.spinnerTool);
-        ArrayList<StateVO> listVOsIngred = new ArrayList<>();
-        String[] selected;
-         for (int i = 0; i < select_ingredients.length; i++) {
-            StateVO stateVOIngred = new StateVO();
-            stateVOIngred.setTitle(select_ingredients[i]);
-            stateVOIngred.setSelected(false);
-            listVOsIngred.add(stateVOIngred);
-        }
-        ArrayList<StateVO> listVOsTool = new ArrayList<>();
-
-        for (int i = 0; i < select_tools.length; i++) {
-            StateVO stateVOTool = new StateVO();
-            stateVOTool.setTitle(select_tools[i]);
-            stateVOTool.setSelected(false);
-            listVOsTool.add(stateVOTool);
-        }
-        filterAdapter myAdapterTool = new filterAdapter(getActivity(), 0,
-                listVOsTool,select_tools,selectedTools);
-        filterAdapter myAdapterIngred = new filterAdapter(getActivity(), 0,
-                listVOsIngred,select_ingredients,selectedIngredients);
-
-        spinnerTool.setAdapter(myAdapterTool);
-        spinnerIngred.setAdapter(myAdapterIngred);
+        new GetListAsync().execute();
         return inputFragmentView;
     }
 
@@ -116,42 +86,141 @@ public class SearchFragment extends Fragment {
         new SearchFoodAsync().execute(data);
     }
 
-    public class SearchFoodAsync extends AsyncTask<String, Void, ResultSet> {
-        Food food;
-
+    public class GetListAsync extends AsyncTask<Void, Void, Void> {
         @Override
-        protected ResultSet doInBackground(String... strings) {
-            food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
-            String foodName = strings[0];
-            ResultSet resultSet = food.searchFood(foodName);
-            return resultSet;
+        protected Void doInBackground(Void... voids) {
+            Ingredient ingredient = new Ingredient(Statics.connection.getConnection());
+            Tool tool = new Tool(Statics.connection.getConnection());
+            ingredientsList = ingredient.listIngredient();
+            toolsList = tool.listTool();
+            return null;
         }
 
         @Override
-        protected void onPostExecute(ResultSet resultSet) {
-            super.onPostExecute(resultSet);
-            ArrayList<String> list = new ArrayList<>();
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            System.out.println(ingredientsList.get(3));
+            System.out.println(ingredientsList.get(4));
+            Spinner spinnerIngred= (Spinner) inputFragmentView.findViewById(R.id.spinnerIngred);
+            Spinner spinnerTool = (Spinner) inputFragmentView.findViewById(R.id.spinnerTool);
+            ArrayList<StateVO> listVOsIngred = new ArrayList<>();
+            for (int i = 0; i < ingredientsList.size(); i++) {
+                StateVO stateVOIngred = new StateVO();
+                stateVOIngred.setTitle(ingredientsList.get(i));
+                stateVOIngred.setSelected(false);
+                listVOsIngred.add(stateVOIngred);
+            }
+            ArrayList<StateVO> listVOsTool = new ArrayList<>();
+
+            for (int i = 0; i < toolsList.size(); i++) {
+                StateVO stateVOTool = new StateVO();
+                stateVOTool.setTitle(toolsList.get(i));
+                stateVOTool.setSelected(false);
+                listVOsTool.add(stateVOTool);
+            }
+            filterAdapter myAdapterTool = new filterAdapter(getActivity(), 0,
+                    listVOsTool,toolsList,selectedTools);
+            filterAdapter myAdapterIngred = new filterAdapter(getActivity(), 0,
+                    listVOsIngred,ingredientsList,selectedIngredients);
+
+            spinnerTool.setAdapter(myAdapterTool);
+            spinnerIngred.setAdapter(myAdapterIngred);
+        }
+    }
+    public class SearchFoodAsync extends AsyncTask<String, Void, Void> {
+        Food food;
+        ResultSet resultSet;
+        ArrayList<String> list;
+
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
+            Tool tool = new Tool(Statics.connection.getConnection());
+            Ingredient ingredient = new Ingredient(Statics.connection.getConnection());
+            String searchName = strings[0];
+            resultSet = food.searchFood(searchName);
+            ArrayList<String> toolFoodID = new ArrayList<>();
+            ArrayList<String> ingredientFoodID = new ArrayList<>();
+
+            list = new ArrayList<>();
             if (resultSet != null) {
                 System.out.println("ASDasd");
                 try {
                     while (resultSet.next()) {
+                        boolean toolBool = true;
+                        boolean ingredientBool = true;
                         int foodID = resultSet.getInt("foodID");
                         String foodName = resultSet.getString("foodName");
                         String foodDescription = resultSet.getString("foodDescription");
-                        list.add(foodName);
                         byte [] foodPic = resultSet.getBytes("foodPic");
                         Object[] array = new Object[4];
-                        array[0] = foodID;
-                        array[1] = foodName;
-                        array[2] = foodDescription;
-                        array[3] = foodPic;
-                        arrayLists.add(array);
-                        System.out.println(foodName);
+                        toolFoodID = tool.listToolFood(foodID);
+                        System.out.println(foodID);
+                        if (!selectedTools.isEmpty()){
+                            for (String t : selectedTools) {
+                                System.out.println(t);
+                                if (!toolFoodID.contains(t)){
+                                    toolBool = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!selectedIngredients.isEmpty()) {
+                            ingredientFoodID = ingredient.listIngredientFood(foodID);
+                            for (String i : selectedIngredients) {
+                                System.out.println(i);
+                                if (!ingredientFoodID.contains(i)) {
+                                    System.out.println(false);
+                                    ingredientBool = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (toolBool && ingredientBool) {
+                            System.out.println(foodName);
+                            list.add(foodName);
+                            array[0] = foodID;
+                            array[1] = foodName;
+                            array[2] = foodDescription;
+                            array[3] = foodPic;
+                            arrayLists.add(array);
+                        }
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void avoid) {
+            super.onPostExecute(avoid);
+//            ArrayList<String> list = new ArrayList<>();
+//            if (resultSet != null) {
+//                System.out.println("ASDasd");
+//                try {
+//                    while (resultSet.next()) {
+//                        int foodID = resultSet.getInt("foodID");
+//                        String foodName = resultSet.getString("foodName");
+//                        String foodDescription = resultSet.getString("foodDescription");
+//                        list.add(foodName);
+//                        byte [] foodPic = resultSet.getBytes("foodPic");
+//                        Object[] array = new Object[4];
+//                        array[0] = foodID;
+//                        array[1] = foodName;
+//                        array[2] = foodDescription;
+//                        array[3] = foodPic;
+//                        arrayLists.add(array);
+//                        System.out.println(foodName);
+//                    }
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
             if (list.isEmpty()){
                 Toast.makeText(getActivity(), "No result found", Toast.LENGTH_SHORT).show();
             } else {

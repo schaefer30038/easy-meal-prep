@@ -55,6 +55,7 @@ public class Tool {
 	protected ArrayList<String> listTool() {
 		try {
 			ArrayList<String> tools = new ArrayList<String>();
+			tools.add("Select Tools");
 			String sql = "select * from Tool;";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -67,17 +68,19 @@ public class Tool {
 		return null;
 	}
 
-	protected ArrayList[] listToolFood(int foodID) {
+	protected ArrayList<String> listToolFood(int foodID) {
 		try {
-			ArrayList[] result = new ArrayList[2];
-			result[1] = new ArrayList<String>();
-			result[0] = new ArrayList<String>();
-			
+//			ArrayList[] result = new ArrayList[2];
+			ArrayList<String> result = new ArrayList<String>();
+//			result[1] = new ArrayList<String>();
+//			result[0] = new ArrayList<String>();
+
 			String sql = "select * from FoodTool where foodID = " + foodID + ";";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				result[0].add(rs.getString("foodID"));
-				result[1].add(rs.getString("toolName"));
+//				result[0].add(rs.getString("foodID"));
+//				result[1].add(rs.getString("toolName"));
+				result.add(rs.getString("toolName"));
 			}
 			return result;
 		} catch (SQLException e) {

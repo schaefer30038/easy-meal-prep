@@ -3,6 +3,8 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/baloo</item>
         <item>@font/bowlby_one_sc</item>
+        <item>@font/comfortaa</item>
+        <item>@font/comfortaa_light</item>
         <item>@font/fugaz_one</item>
         <item>@font/roboto_black</item>
     </array>

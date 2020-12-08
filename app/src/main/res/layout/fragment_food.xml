@@ -35,7 +35,9 @@
                 android:layout_height="wrap_content"
                 android:textSize="35sp"
                 android:theme="@style/TitleText"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="10dp"/>
 
             <ImageView
                 android:id="@+id/food_pic_iv"
@@ -65,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:theme="@style/BodyText"/>
+                android:theme="@style/FillDesc"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -77,7 +79,7 @@
                 android:id="@+id/ingredients_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/BodyText" />
+                android:theme="@style/FillDesc" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -90,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:theme="@style/BodyText"/>
+                android:theme="@style/FillDesc"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -103,16 +105,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:theme="@style/BodyText"/>
+                android:theme="@style/FillDesc"/>
 
             <Button
                 android:id="@+id/share_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/NormalButton"
+                android:layout_marginBottom="10dp"
                 android:drawableTop="@android:drawable/ic_menu_share"
                 android:text="Share Recipe"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:theme="@style/NormalButton" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

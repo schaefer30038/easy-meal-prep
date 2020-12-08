@@ -13,39 +13,42 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="196dp"
         android:text="Name:"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/etUpdateName"
+        app:layout_constraintStart_toStartOf="@id/etUpdateName"
+        android:theme="@style/BodyText"/>
 
     <EditText
         android:id="@+id/etUpdateName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:ems="12"
         android:hint="Enter new name"
         android:inputType="textPersonName"
         android:theme="@style/FillInfo"
-        app:layout_constraintStart_toStartOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32999998" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Email Address:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/etUpdateName"
-        app:layout_constraintTop_toBottomOf="@+id/etUpdateName" />
+        app:layout_constraintTop_toBottomOf="@+id/etUpdateName"
+        android:theme="@style/BodyText"/>
 
     <EditText
         android:id="@+id/etUpdateEmailAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:ems="12"
         android:hint="Enter new email address"
         android:inputType="textEmailAddress"
         android:theme="@style/FillInfo"
@@ -56,16 +59,18 @@
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Password:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/etUpdateEmailAddress"
-        app:layout_constraintTop_toBottomOf="@+id/etUpdateEmailAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/etUpdateEmailAddress"
+        android:theme="@style/BodyText"/>
 
     <EditText
         android:id="@+id/etUpdatePassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:ems="12"
         android:hint="Enter new password"
         android:inputType="textPassword"
         android:theme="@style/FillInfo"
@@ -74,13 +79,12 @@
 
     <Button
         android:id="@+id/update_confirm"
-        android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="32dp"
         android:text="Update"
         android:theme="@style/NormalButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/etUpdatePassword"
+        app:layout_constraintStart_toStartOf="@id/etUpdatePassword"
         app:layout_constraintTop_toBottomOf="@+id/etUpdatePassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

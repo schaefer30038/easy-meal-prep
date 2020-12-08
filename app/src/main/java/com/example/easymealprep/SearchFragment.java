@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,6 +57,7 @@ public class SearchFragment extends Fragment {
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getActivity(), "Searching for recipes. Please wait a moment", Toast.LENGTH_SHORT).show();
                 String data = (String) searchBox.getText().toString();
                 arrayLists = new ArrayList <Object[]>();
                 sendData(data);
@@ -150,7 +152,11 @@ public class SearchFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
-
+            if (list.isEmpty()){
+                Toast.makeText(getActivity(), "No result found", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Here are your search results", Toast.LENGTH_SHORT).show();
+            }
             generalListAdapter = new GeneralListAdapter(getActivity(), R.layout.listview_items, list);
             GeneralListAdapter.listName = "Search List";
             listView.setAdapter(generalListAdapter);

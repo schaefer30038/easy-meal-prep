@@ -94,6 +94,8 @@ public class SearchFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             Ingredient ingredient = new Ingredient(Statics.connection.getConnection());
             Tool tool = new Tool(Statics.connection.getConnection());
+            ingredient.deleteIngredient();
+            tool.deleteTool();
             ingredientsList = ingredient.listIngredient();
             toolsList = tool.listTool();
             return null;

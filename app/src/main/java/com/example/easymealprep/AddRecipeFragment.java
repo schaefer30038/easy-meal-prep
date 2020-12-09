@@ -91,7 +91,6 @@ public class AddRecipeFragment extends Fragment {
         createRecipe_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Recipe is being added. Please wait a moment", Toast.LENGTH_LONG).show();
                 System.out.println("Made it to AddRecipeFragment, onClick, createRecipe_button");
                 String name = enterFoodName.getText().toString();
                 String description = enterFoodDescription.getText().toString();
@@ -120,6 +119,7 @@ public class AddRecipeFragment extends Fragment {
                         return;
                     }
                     sendData(name, description, instruction, ingredient, tool, bitmap);
+                    Toast.makeText(getActivity(), "Recipe is being added. Please wait a moment", Toast.LENGTH_LONG).show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

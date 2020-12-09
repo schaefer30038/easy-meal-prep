@@ -139,7 +139,11 @@ public class SearchFragment extends Fragment {
             Tool tool = new Tool(Statics.connection.getConnection());
             Ingredient ingredient = new Ingredient(Statics.connection.getConnection());
             String searchName = strings[0];
-            resultSet = food.searchFood(searchName);
+            if (searchName.length()==0) {
+                resultSet = food.listAllFood();
+            } else {
+                resultSet = food.searchFood(searchName);
+            }
             ArrayList<String> toolFoodID = new ArrayList<>();
             ArrayList<String> ingredientFoodID = new ArrayList<>();
 

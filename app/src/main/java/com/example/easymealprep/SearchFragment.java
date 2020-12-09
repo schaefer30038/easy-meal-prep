@@ -199,28 +199,6 @@ public class SearchFragment extends Fragment {
         @Override
         protected void onPostExecute(Void avoid) {
             super.onPostExecute(avoid);
-//            ArrayList<String> list = new ArrayList<>();
-//            if (resultSet != null) {
-//                System.out.println("ASDasd");
-//                try {
-//                    while (resultSet.next()) {
-//                        int foodID = resultSet.getInt("foodID");
-//                        String foodName = resultSet.getString("foodName");
-//                        String foodDescription = resultSet.getString("foodDescription");
-//                        list.add(foodName);
-//                        byte [] foodPic = resultSet.getBytes("foodPic");
-//                        Object[] array = new Object[4];
-//                        array[0] = foodID;
-//                        array[1] = foodName;
-//                        array[2] = foodDescription;
-//                        array[3] = foodPic;
-//                        arrayLists.add(array);
-//                        System.out.println(foodName);
-//                    }
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            }
             if (list.isEmpty()){
                 Toast.makeText(getActivity(), "No result found", Toast.LENGTH_SHORT).show();
             } else {

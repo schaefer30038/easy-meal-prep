@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,6 +37,7 @@ public class ListRecipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Toast.makeText(getActivity(), "List is loading. Please wait a moment", Toast.LENGTH_LONG).show();
         arrayLists = new ArrayList <Object[]>();
         view=inflater.inflate(R.layout.fragment_list, container,false);
         mListview = (ListView) view.findViewById(R.id.recipeTitles);
@@ -76,6 +78,9 @@ public class ListRecipeFragment extends Fragment {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+            }
+            if (list.isEmpty()){
+                Toast.makeText(getActivity(), "No recipe found", Toast.LENGTH_SHORT).show();
             }
             //used default android.R.layout.simple_list_item_1 before. Changed  this to custom XML for iteration2
             mAdapter = new GeneralListAdapter(getActivity(), R.layout.listview_items, list);

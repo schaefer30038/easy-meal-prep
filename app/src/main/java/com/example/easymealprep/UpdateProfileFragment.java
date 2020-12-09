@@ -45,17 +45,48 @@ public class UpdateProfileFragment extends Fragment {
                 String sendName = (String) name.getText().toString();
                 String sendPassword = (String) password.getText().toString();
                 String sendEmail = (String) update_button.getText().toString();
-                if(sendName.equals("")){
-                    name.setError("Please enter a name");
-                    return;
-                }
-                if(sendPassword.equals("")){
+                if(sendPassword.length() == 0){
+                    password.requestFocus();
                     password.setError("Please enter a password");
-                    return;
                 }
-                if(sendEmail.equals("")){
-                    update_button.setError("Please enter an email");
-                    return;
+                else if(!sendPassword.matches(".{8,20}")){
+                    password.requestFocus();
+                    password.setError("Password has to be between 8 and 20 characters");
+                }
+                else if(!sendPassword.matches("(?=.*[0-9]).{8,20}")){
+                    password.requestFocus();
+                    password.setError("Password has to have at least one digit");
+                }
+                else if(!sendPassword.matches("(?=.*[a-z]).{8,20}")){
+                    password.requestFocus();
+                    password.setError("Password has to have at least one lower case alphabet");
+                }
+                else if(!sendPassword.matches("(?=.*[A-Z]).{8,20}")){
+                    password.requestFocus();
+                    password.setError("Password has to have at least one upper case alphabet");
+                }
+                else if(!sendPassword.matches("(?=.*[-@#$%^<>&+=()]).{8,20}")){
+                    password.requestFocus();
+                    password.setError("Password has to have at least one special character from '-@#$%^&+=<>()'");
+                }
+                else if(!sendPassword.matches("(?=\\S+$).{8,20}")){
+                    password.requestFocus();
+                    password.setError("Password has either a space or non allowed character");
+                }
+                else if(sendName.length() == 0){
+                    name.requestFocus();
+                    name.setError("Please enter a name");
+                }
+                else if(!sendName.matches("[a-zA-Z ]+")) {
+                    name.requestFocus();
+                    name.setError("Enter only alphabetical characters");
+                }
+                else if(sendEmail.length() == 0){
+                    email.requestFocus();
+                    email.setError("Please enter an email");
+                } else if(!Statics.isValidEmailAddress(sendEmail)) {
+                    email.requestFocus();
+                    email.setError("Please enter a valid email address");
                 }
                 sendData(sendName, sendPassword, sendEmail);
             }

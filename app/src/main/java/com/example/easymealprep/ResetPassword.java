@@ -32,6 +32,11 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
         switch(v.getId()) {
             case R.id.resetPassword_Button:  // TODO do the actions
                 System.out.println("Reset Password");
+                if (username_reset.getText().toString().length() == 0){
+                    username_reset.requestFocus();
+                    username_reset.setError("Please enter either a username or password");
+                    break;
+                }
                 sendData();
                 break;
         }
@@ -51,6 +56,7 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
     public class LongOperation extends AsyncTask<Void, Void, String> {
 
         boolean bool = false;
+        SQLConnection connect;
 
         @Override
         protected String doInBackground(Void... params) {
@@ -70,19 +76,15 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
                     + "' and you can use the password to sign in to the app and resetting it in the setting.\n"
                     + "Thank You";
 
-            SQLConnection connect = new SQLConnection();
+            connect = new SQLConnection();
             Account account = new Account(connect.getConnection());
             boolean email = false;
             String recipient = "";
-            if (userInput.contains("@")) {
-                recipient = userInput;
-                email = true;
-            } else {
-                recipient = account.getEmail(userInput);
-            }
+            email = Statics.isValidEmailAddress(userInput);
+            recipient = account.getEmail(email, userInput);
+            System.out.println(recipient);
             bool = account.resetPassword(email, userInput, password);
-            connect.closeConnection();
-            if (bool) {
+            if (bool && recipient != null) {
                 try {
                     GMailSender sender = new GMailSender("ezmealprepapp@gmail.com", "sz&ZjckQB");
                     sender.sendMail("EZ Meal Prep Password Reset",
@@ -101,6 +103,7 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
 
         @Override
         protected void onPostExecute(String result) {
+            connect.closeConnection();
             Log.e("LongOperation", result + "");
         }
     }

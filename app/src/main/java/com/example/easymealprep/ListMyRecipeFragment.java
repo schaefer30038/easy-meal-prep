@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +29,6 @@ public class ListMyRecipeFragment extends Fragment {
     private ListView mListview;
     private ArrayList<String> mArrData;
     private ListAdapter mAdapter;
-    private ProgressBar pbar;
     static ArrayList <Object[]> arrayLists;
     static FragmentManager fragmanager;
     // TODO add titles for recipes to list
@@ -43,8 +43,9 @@ public class ListMyRecipeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         ListAdapter.activity = getActivity();
+        Toast.makeText(getActivity(), "List is loading. Please wait a moment", Toast.LENGTH_LONG).show();
         arrayLists = new ArrayList <Object[]>();
-        view=inflater.inflate(R.layout.fragment_list, container,false);
+        view=inflater.inflate(R.layout.fragment_mylist, container,false);
         mListview = (ListView) view.findViewById(R.id.recipeTitles);
         mArrData = new ArrayList<String>();
         mAdapter = new ListAdapter(getActivity(),R.layout.customlistlayout, mArrData);
@@ -89,10 +90,13 @@ public class ListMyRecipeFragment extends Fragment {
                 }
             }
 
+            if (list.isEmpty()){
+                Toast.makeText(getActivity(), "No recipe found", Toast.LENGTH_SHORT).show();
+            }
+
             mAdapter = new ListAdapter(getActivity(), R.layout.customlistlayout, list);
             mListview.setAdapter(mAdapter);
             fragmanager = getFragmentManager();
-        //    pbar.setVisibility(View.GONE);
 
 
             mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

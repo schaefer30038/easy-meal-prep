@@ -177,21 +177,26 @@ public class Account {
 	protected boolean resetPassword(boolean email, String userInput, String userPassword) {
 		String sql = "";
 		if (email){
-			sql = sql + "update Account set userPassword = \"" + userPassword + "\" where userEmail = \"" + userInput + "\";";
+			sql = "update Account set userPassword = \"" + userPassword + "\" where userEmail = \"" + userInput + "\";";
 		} else {
-			sql = sql + "update Account set userPassword = \"" + userPassword + "\" where userAccount = \"" + userInput + "\";";
+			sql = "update Account set userPassword = \"" + userPassword + "\" where userAccount = \"" + userInput + "\";";
 		}
 		try {
 			stmt.execute(sql);
 			return true;
 		} catch (SQLException e) {
 			System.out.println("Error: resetPassword " + e.getMessage());
+			return false;
 		}
-		return false;
 	}
 
-	protected String getEmail(String userAccount) {
-		String sql = "select a.userEmail from Account a where userAccount = \"" + userAccount + "\";";
+	protected String getEmail(boolean email, String userInput) {
+		String sql = "";
+		if (email){
+			sql = "select a.userEmail from Account a where userEmail = \"" + userInput + "\";";
+		} else {
+			sql = "select a.userEmail from Account a where userAccount = \"" + userInput + "\";";
+		}
 		String result = null;
 		try {
 			ResultSet rs = stmt.executeQuery(sql);

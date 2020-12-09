@@ -2,6 +2,9 @@ package com.example.easymealprep;
 
 import java.util.ArrayList;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 public class Statics {
     static SQLConnection connection;
     static boolean loop = true;
@@ -14,6 +17,17 @@ public class Statics {
     // currFood[3] will be food picture
     static Object[] currFood = new Object[4];
     static ArrayList<Integer> currFavList;
+
+    public static boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
+    }
 
     // encodes the password to different string
     public static String encoder(String input) {

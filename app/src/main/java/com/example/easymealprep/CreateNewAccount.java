@@ -28,6 +28,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 import static com.example.easymealprep.Statics.check;
 
 //WHOLE FILE CREATED IN ITERATION 1
@@ -71,27 +74,69 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
         String passwordString = password.getText().toString();
         String nameString = name.getText().toString();
         String emailString = email.getText().toString();
-        if(usernameString.equals("")){
+        if(usernameString.length() == 0){
+            username.requestFocus();
             username.setError("Please enter a username");
-            return;
         }
-        if(passwordString.equals("")){
+        else if(!usernameString.matches(".{5,20}")){
+            username.requestFocus();
+            username.setError("Username has to be between 5 and 20 characters");
+        }
+        else if(!usernameString.matches("[a-zA-Z0-9]+")){
+            username.requestFocus();
+            username.setError("Username can only be alphabets and digits");
+        }
+        else if(passwordString.length() == 0){
+            password.requestFocus();
             password.setError("Please enter a password");
-            return;
         }
-        if(nameString.equals("")){
+        else if(!passwordString.matches(".{8,20}")){
+            password.requestFocus();
+            password.setError("Password has to be between 8 and 20 characters");
+        }
+        else if(!passwordString.matches("(?=.*[0-9]).{8,20}")){
+            password.requestFocus();
+            password.setError("Password has to have at least one digit");
+        }
+         else if(!passwordString.matches("(?=.*[a-z]).{8,20}")){
+            password.requestFocus();
+            password.setError("Password has to have at least one lower case alphabet");
+        }
+         else if(!passwordString.matches("(?=.*[A-Z]).{8,20}")){
+            password.requestFocus();
+            password.setError("Password has to have at least one upper case alphabet");
+        }
+         else if(!passwordString.matches("(?=.*[-@#$%^<>&+=()]).{8,20}")){
+            password.requestFocus();
+            password.setError("Password has to have at least one special character from '-@#$%^&+=<>()'");
+        }
+        else if(!passwordString.matches("(?=\\S+$).{8,20}")){
+            password.requestFocus();
+            password.setError("Password has either a space or non allowed character");
+        }
+        else if(nameString.length() == 0){
+            name.requestFocus();
             name.setError("Please enter a name");
-            return;
         }
-        if(emailString.equals("")){
+        else if(!nameString.matches("[a-zA-Z ]+")) {
+            name.requestFocus();
+            name.setError("Enter only alphabetical characters");
+        }
+        else if(emailString.length() == 0){
+            email.requestFocus();
             email.setError("Please enter an email");
-            return;
+        } else if(!Statics.isValidEmailAddress(emailString)) {
+            email.requestFocus();
+            email.setError("Please enter a valid email address");
         }
-        if(true){
+        else {
             new CreateAccountAsync().execute(usernameString, passwordString, nameString, emailString);
         }
 
     }
+
+
+
     public class CreateAccountAsync extends AsyncTask<String,Void,Void> {
         Account account;
         SQLConnection connect;
@@ -115,6 +160,7 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
             connect.closeConnection();
             System.out.print(check);
             if(check){
+                Toast.makeText(CreateNewAccount.this,"Account successfully created",Toast.LENGTH_SHORT).show();
                 Intent intent2Main = new Intent(CreateNewAccount.this, MainActivity.class);
                 startActivity(intent2Main);
             }

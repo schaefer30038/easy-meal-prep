@@ -37,8 +37,8 @@ public class SearchFragment extends Fragment {
     ArrayList<String> toolsList;
     View inputFragmentView;
 
-    private static ArrayList<String> selectedIngredients =  new ArrayList<>();
-    private static ArrayList<String> selectedTools =  new ArrayList<>();
+    private static ArrayList<String> selectedIngredients;
+    private static ArrayList<String> selectedTools;
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -54,6 +54,8 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         inputFragmentView = inflater.inflate(R.layout.fragment_search, container, false);
         // Inflate the layout for this fragment
+        selectedIngredients = new ArrayList<>();
+        selectedTools =  new ArrayList<>();
         searchBox = (EditText) inputFragmentView.findViewById(R.id.searchField);
         listView = (ListView) inputFragmentView.findViewById(R.id.list);
         search_button = (Button) inputFragmentView.findViewById(R.id.search_b);
@@ -66,6 +68,7 @@ public class SearchFragment extends Fragment {
                 sendData(data);
             }
         });
+
         new GetListAsync().execute();
         return inputFragmentView;
     }

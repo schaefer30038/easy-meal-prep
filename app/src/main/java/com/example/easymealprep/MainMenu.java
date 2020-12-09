@@ -29,6 +29,11 @@ public class MainMenu extends AppCompatActivity implements BottomNavigationView.
     }
 
     @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
+
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();

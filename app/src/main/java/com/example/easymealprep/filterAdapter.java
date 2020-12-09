@@ -55,6 +55,8 @@ public class filterAdapter extends ArrayAdapter<StateVO> {
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
+            holder.mCheckBox.setOnCheckedChangeListener(null);
+
         }
 
         holder.mTextView.setText(listState.get(position).getTitle());
@@ -86,6 +88,7 @@ public class filterAdapter extends ArrayAdapter<StateVO> {
                 if (!isFromView) {
                     listState.get(position).setSelected(isChecked);
                 }
+
 
 
             }

@@ -16,8 +16,9 @@
         android:gravity="center_horizontal"
         android:text="Edit Your Recipe"
         android:textAlignment="center"
+        android:textSize="26sp"
         android:theme="@style/TitleText"
-        app:layout_constraintBottom_toTopOf="@+id/updateRecipe_iv"
+        app:layout_constraintBottom_toTopOf="@+id/cv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +34,7 @@
         app:layout_constraintBottom_toTopOf="@+id/updateRecipe_sv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/delete_update_pic"
-        app:layout_constraintTop_toBottomOf="@+id/updateRecipe_iv" />
+        app:layout_constraintTop_toBottomOf="@+id/cv" />
 
     <Button
         android:id="@+id/delete_update_pic"
@@ -49,16 +50,26 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/updateRecipe_iv"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/default_food_pic"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv"
+        android:layout_marginTop="10dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="21dp"
+        android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toTopOf="@+id/updateRecipePic_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
+        <ImageView
+            android:id="@+id/updateRecipe_iv"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/default_food_pic" />
+
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/updateRecipe_btn"
@@ -81,7 +92,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginVertical="20dp"
+        android:layout_marginVertical="10dp"
         android:layout_marginStart="14dp"
         android:layout_marginLeft="10dp"
         android:layout_marginEnd="14dp"

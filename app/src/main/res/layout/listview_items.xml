@@ -10,33 +10,43 @@
 
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:descendantFocusability="blocksDescendants"
             android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="horizontal"
-            android:layout_marginTop="5sp"
-            android:layout_marginBottom="5sp">
+            android:paddingTop="20sp"
+            android:paddingBottom="20sp">
 
-                <ImageView
-                    android:id="@+id/imageView"
+                <androidx.cardview.widget.CardView
                     android:layout_width="150dp"
                     android:layout_height="100dp"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/default_food_pic"
-                    android:scaleType="centerCrop" />
+                    android:elevation="10dp"
+                    android:layout_marginLeft="20sp"
+                    app:cardCornerRadius="15dp">
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="150dp"
+                            android:layout_height="100dp"
+                            android:adjustViewBounds="true"
+                            android:background="@drawable/button"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/default_food_pic" />
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/recipeName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:theme="@style/BodyText"
+                    android:layout_gravity="center"
                     android:layout_margin="15sp"
-                    android:layout_gravity="center"/>
+                    android:theme="@style/BodyText" />
 
         </LinearLayout>
 </RelativeLayout>

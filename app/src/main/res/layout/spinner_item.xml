@@ -7,10 +7,12 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
         android:layout_marginLeft="15dp"
         android:text="text"
         android:textSize="17sp"
         android:textAlignment="gravity"
+        android:fontFamily="@font/comfortaa_bold"
         android:theme="@style/BodyText"/>
 
     <CheckBox

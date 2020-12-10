@@ -50,9 +50,9 @@
     </style>
     <style name="BodyText" parent="Theme.AppCompat">
         <item name='android:textColor'>@color/lightCream</item>
-        <item name='fontFamily'>@font/comfortaa</item>
-        <item name='android:textSize'>20sp</item>
-        <item name='android:layout_margin'>20sp</item>
+        <item name='fontFamily'>@font/comfortaa_bold</item>
+        <item name='android:textSize'>16sp</item>
+        <item name='android:paddingVertical'>5sp</item>
     </style>
     <style name="FillInfo" parent="Theme.AppCompat">
         <item name='android:backgroundTint'>@color/white</item>
@@ -81,7 +81,7 @@
 
     <style name="TitleDesc" parent="Theme.AppCompat">
         <item name='android:textColor'>@color/lightCream</item>
-        <item name='android:fontFamily'>@font/comfortaa_light</item>
+        <item name='android:fontFamily'>@font/comfortaa</item>
         <item name='android:textSize'>20sp</item>
         <item name='android:paddingTop'>30sp</item>
     </style>
@@ -89,10 +89,10 @@
     <style name="FillDesc" parent="Theme.AppCompat">
         <item name='android:backgroundTint'>@color/white</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/comfortaa_light</item>
+        <item name="android:fontFamily">@font/comfortaa</item>
     </style>
     <style name='SpinnerDropdownTheme' parent="Widget.AppCompat.DropDownItem.Spinner">
-        <item name="android:colorBackground">#9B78A1</item>
+        <item name="android:colorBackground">@color/darkPurple</item>
     </style>
 
 </resources>

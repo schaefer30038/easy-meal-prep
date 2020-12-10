@@ -12,10 +12,10 @@
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
         android:text="Add Your Recipe"
         android:textAlignment="center"
+        android:textSize="26sp"
         android:theme="@style/TitleText"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,18 +50,28 @@
         app:layout_constraintEnd_toStartOf="@+id/add_pic_btn"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@id/cv" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/default_food_pic"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv"
+        android:layout_marginTop="10dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="21dp"
+        android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toTopOf="@+id/delete_add_pic_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/default_food_pic" />
+
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/createRecipe_button"
@@ -85,7 +95,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginVertical="20dp"
+        android:layout_marginVertical="10dp"
         android:layout_marginStart="14dp"
         android:layout_marginLeft="14dp"
         android:layout_marginEnd="14dp"

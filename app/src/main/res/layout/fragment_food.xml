@@ -39,13 +39,29 @@
                 android:gravity="center"
                 android:layout_marginTop="10dp"/>
 
-            <ImageView
-                android:id="@+id/food_pic_iv"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="34dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/updateRecipePic_btn"
+                app:layout_constraintTop_toBottomOf="@+id/title">
+
+            <ImageView
+                android:id="@+id/food_pic_iv"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 tools:src="@tools:sample/avatars" />
+
+            </androidx.cardview.widget.CardView>
 
             <ToggleButton
                 android:id="@+id/fav_toggle"
@@ -66,8 +82,7 @@
                 android:id="@+id/food_desc_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:theme="@style/FillDesc"/>
+                android:theme="@style/BodyText"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -79,7 +94,7 @@
                 android:id="@+id/ingredients_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/FillDesc" />
+                android:theme="@style/BodyText" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -91,8 +106,7 @@
                 android:id="@+id/tools_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:theme="@style/FillDesc"/>
+                android:theme="@style/BodyText"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -104,8 +118,7 @@
                 android:id="@+id/instructions_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:theme="@style/FillDesc"/>
+                android:theme="@style/BodyText"/>
 
             <Button
                 android:id="@+id/share_btn"

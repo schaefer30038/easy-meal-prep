@@ -6,38 +6,47 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:descendantFocusability="blocksDescendants"
         android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
         android:orientation="horizontal"
-        android:paddingTop="7.5dp"
-        android:paddingBottom="7.5dp">
+        android:paddingBottom="20sp"
+        android:paddingTop="20sp">
 
-        <ImageView
-            android:id="@+id/imageView"
+        <androidx.cardview.widget.CardView
             android:layout_width="150dp"
             android:layout_height="100dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/default_food_pic"
-            android:scaleType="centerCrop" />
+            android:layout_marginLeft="10sp"
+            android:elevation="10dp"
+            app:cardCornerRadius="15dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_food_pic" />
+
+        </androidx.cardview.widget.CardView>
 
 
         <TextView
             android:id="@+id/recipeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15sp"
-            android:text="TextView"
-            android:layout_weight="1"
-            android:theme="@style/BodyText"
             android:layout_gravity="center"
-            android:textSize="20dp" />
+            android:layout_margin="15sp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textSize="20dp"
+            android:theme="@style/BodyText" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            android:descendantFocusability="blocksDescendants"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/deleteBtn"
@@ -45,7 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="2dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="15dp"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:src="@drawable/ic_baseline_delete_24"
@@ -62,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="2dp"
+                android:layout_marginRight="15dp"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:src="@drawable/ic_baseline_edit_24"

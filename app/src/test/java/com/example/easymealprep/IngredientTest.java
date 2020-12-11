@@ -147,20 +147,20 @@ class IngredientTest {
 		assertEquals("Insert IngredientFood: ", true, testIngredient.createIngredientFood(1, "Test Ingredient3"));
 		assertEquals("Insert IngredientFood: ", true, testIngredient.createIngredientFood(1, "Test Ingredient4"));
 
-		ArrayList[] result = testIngredient.listIngredientFood(1);
-		assertEquals("Return Size1: ", 4, result[0].size());
-		assertEquals("Return Size2: ", 4, result[1].size());
+		ArrayList<String> result = testIngredient.listIngredientFood(1);
+		assertEquals("Return Size1: ", 4, result.size());
+		assertEquals("Return Size2: ", 4, result.size());
 
-		if (!result[1].get(0).equals("Test Ingredient1")) {
+		if (!result.get(0).equals("Test Ingredient1")) {
 			fail("Wrong ingredient returned");
 		}
-		if (!result[1].get(1).equals("Test Ingredient2")) {
+		if (!result.get(1).equals("Test Ingredient2")) {
 			fail("Wrong ingredient returned");
 		}
-		if (!result[1].get(2).equals("Test Ingredient3")) {
+		if (!result.get(2).equals("Test Ingredient3")) {
 			fail("Wrong ingredient returned");
 		}
-		if (!result[1].get(3).equals("Test Ingredient4")) {
+		if (!result.get(3).equals("Test Ingredient4")) {
 			fail("Wrong ingredient returned");
 		}
 
@@ -271,14 +271,14 @@ class IngredientTest {
 
 		assertEquals("Update IngredientFood: ", true, testIngredient.updateIngredient(1, test));
 
-		ArrayList[] result = testIngredient.listIngredientFood(1);
-		if (result[1].size() != 2) {
-			fail("Expected 2 but got " + result[1].size());
+		ArrayList<String> result = testIngredient.listIngredientFood(1);
+		if (result.size() != 2) {
+			fail("Expected 2 but got " + result.size());
 		}
 
-		for (int i = 0; i < result[1].size(); i++) {
-			if (!result[1].get(i).equals("Test Ingredient3") && !result[1].get(i).equals("Test Ingredient4")) {
-				fail("Wrong ingredient: " + result[1].get(i));
+		for (int i = 0; i < result.size(); i++) {
+			if (!result.get(i).equals("Test Ingredient3") && !result.get(i).equals("Test Ingredient4")) {
+				fail("Wrong ingredient: " + result.get(i));
 			}
 		}
 

@@ -233,7 +233,7 @@ public class AddRecipeFragment extends Fragment {
             array = ingredientsList.split(",");
             Ingredient ingredient = new Ingredient(Statics.connection.getConnection());
             for(String text:array) {
-                Statics.check = Statics.check && ingredient.createIngredient(text);
+                ingredient.createIngredient(text);
                 Statics.check = Statics.check && ingredient.createIngredientFood(foodID, text);
             }
             if (!Statics.check) {
@@ -247,7 +247,7 @@ public class AddRecipeFragment extends Fragment {
             toolsList = toolsList.replaceAll(", ", ",");
             array = toolsList.split(",");
             for(String text:array) {
-                Statics.check = Statics.check && tool.createTool(text);
+                tool.createTool(text);
                 Statics.check = Statics.check && tool.createToolFood(foodID, text);
             }
             if (!Statics.check) {

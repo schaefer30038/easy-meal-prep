@@ -47,11 +47,15 @@ public class Account {
 			cstmt.executeUpdate();
 
 			Statics.currName = cstmt.getString(3);
+			userName = Statics.currName;
 			Statics.currUserEmail = cstmt.getString(4);
+			userEmail = Statics.currUserEmail;
 
 			if (!Statics.currName.equals("NULL")) {
 				Statics.currUserAccount = accountName;
+				this.accountName = accountName;
 				Statics.currPassword = password;
+				userPassword = password;
 				return true;
 			}
 		} catch (SQLException e) {

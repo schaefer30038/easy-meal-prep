@@ -1,4 +1,5 @@
-  
+package com.example.easymealprep;
+
 import static org.junit.Assert.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,7 +8,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.sun.source.tree.AssertTree;
+//import com.sun.source.tree.AssertTree;
 
 class ToolTest {
 
@@ -131,21 +132,22 @@ class ToolTest {
 		boolean tool3 = false;
 		boolean tool4 = false;
 		
-		ArrayList[] result = testTool.listToolFood(1);
+		ArrayList<String> result = testTool.listToolFood(1);
 		
-		assertEquals("Num of Tool Food", 4, result[1].size());
+		assertEquals("Num of Tool Food", 4, result.size());
 		
-		for (int i = 0; i < result[1].size(); i++) {
-			if (result[1].get(i).equals("Test Tool1")) {
+		for (int i = 0; i < result.size(); i++) {
+			if (result.get(i).equals("Test Tool1")) {
+				System.out.print(result.get(1));
 				tool1 = true;
 			}
-			if (result[1].get(i).equals("Test Tool2")) {
+			if (result.get(i).equals("Test Tool2")) {
 				tool2 = true;
 			}
-			if (result[1].get(i).equals("Test Tool3")) {
+			if (result.get(i).equals("Test Tool3")) {
 				tool3 = true;
 			}
-			if (result[1].get(i).equals("Test Tool4")) {
+			if (result.get(i).equals("Test Tool4")) {
 				tool4 = true;
 			}
 		}
@@ -163,6 +165,11 @@ class ToolTest {
 	
 	@Test
 	void testUpdateToolFood() {
+		testTool.deleteToolFood(1, "Test Tool1");
+		testTool.deleteToolFood(1, "Test Tool2");
+		testTool.deleteToolFood(1, "Test Tool3");
+		testTool.deleteToolFood(1, "Test Tool4");
+
 		assertTrue(testTool.createTool("Test Tool1"));
 		assertTrue(testTool.createTool("Test Tool2"));
 		assertTrue(testTool.createTool("Test Tool3"));
@@ -182,23 +189,23 @@ class ToolTest {
 		
 		assertTrue(testTool.updateToolFood(1, tools));
 		
-		ArrayList[] result = testTool.listToolFood(1);
+		ArrayList<String> result = testTool.listToolFood(1);
 		
-		if (result[1].size() != 2) {
+		if (result.size() != 2) {
 			fail("Num tools of the food is not 2");
 		}
 		
-		for (int i = 0; i < result[1].size(); i++) {
-			if (result[1].get(i).equals("Test Tool1")) {
+		for (int i = 0; i < result.size(); i++) {
+			if (result.get(i).equals("Test Tool1")) {
 				tool1 = true;
 			}
-			if (result[1].get(i).equals("Test Tool2")) {
+			if (result.get(i).equals("Test Tool2")) {
 				tool2 = true;
 			}
-			if (result[1].get(i).equals("Test Tool3")) {
+			if (result.get(i).equals("Test Tool3")) {
 				tool3 = true;
 			}
-			if (result[1].get(i).equals("Test Tool4")) {
+			if (result.get(i).equals("Test Tool4")) {
 				tool4 = true;
 			}
 		}

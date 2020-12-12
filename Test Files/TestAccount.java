@@ -1,3 +1,5 @@
+package com.example.easymealprep;
+
 import static org.junit.Assert.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;

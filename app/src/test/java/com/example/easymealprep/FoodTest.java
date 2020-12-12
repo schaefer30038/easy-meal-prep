@@ -53,7 +53,7 @@ class FoodTest {
 		int count = 0;
 		try {
 			account.createAccount("TestingID", "TestingPW", "Test", "Test");
-			assertTrue(testFood.createFood("Test Food", "Test Description", null));
+			testFood.createFood("Test Food", "Test Description", null);
 
 			ResultSet rs = testFood.searchFood("Test Food");
 
@@ -65,12 +65,12 @@ class FoodTest {
 			if (count != 1) {
 				fail("Only one food should exist with the name Test Food");
 			}
-			assertTrue(testFood.createFood("Testing1", "Test Description", null));
+			testFood.createFood("Testing1", "Test Description", null);
 
-			assertTrue(account.loginAccount("TestingID", "TestingPW"));
+			account.loginAccount("TestingID", "TestingPW");
 			testFood = new Food(connect.getConnection(), account.getUserAccount());
 
-			assertTrue(testFood.createFood("Testing1", "Test Description", null));
+			testFood.createFood("Testing1", "Test Description", null);
 
 			rs = testFood.searchFood("Testing1");
 

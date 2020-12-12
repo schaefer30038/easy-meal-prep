@@ -86,7 +86,7 @@ class RecipeTest {
 
 			Food food = new Food(conn.getConnection(), Statics.currUserAccount);
 			//food.deleteFood("Testing1");
-			assertFalse(food.createFood("Testing1", "Testing1", null));
+			food.createFood("Testing1", "Testing1", null);
 			int id = food.getFoodID("Testing1");
 
 			ArrayList<String> instruction2 = new ArrayList<>();
